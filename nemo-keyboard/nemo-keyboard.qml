@@ -36,6 +36,8 @@ import QtQuick.Window 2.2
 Item {
     id: canvas
 
+    //width: MInputMethodQuick.screenWidth
+    //height: MInputMethodQuick.screenHeight
     width: Screen.desktopAvailableWidth
     height: Screen.desktopAvailableHeight
 
@@ -45,11 +47,31 @@ Item {
 
         var x = 0, y = 0, width = 0, height = 0;
 
-        var pos = keyboard.mapToItem(canvas, 0, -keyboard.height);
+        /*var pos = keyboard.mapToItem(canvas, 0, -keyboard.height);
         y = pos.y;
         x = pos.x;
         width = keyboard.width;
-        height = keyboard.height;
+        height = keyboard.height;*/
+        var angle = MInputMethodQuick.appOrientation
+
+        switch (angle) {
+        case 0:
+            y = MInputMethodQuick.screenHeight - vkb_landscape.height
+        case 180:
+            x = (MInputMethodQuick.screenWidth - vkb_landscape.width) / 2
+            width = keyboard.width
+            height = keyboard.height
+
+            break;
+
+        case 270:
+            x = MInputMethodQuick.screenWidth - vkb_portrait.height
+        case 90:
+            y = (MInputMethodQuick.screenHeight - vkb_portrait.width) / 2
+            width = keyboard.height
+            height = keyboard.width
+            break;
+        }
 
         MInputMethodQuick.setInputMethodArea(Qt.rect(x, y, width, height))
         MInputMethodQuick.setScreenRegion(Qt.rect(x, y, width, height))
@@ -61,16 +83,21 @@ Item {
 
         property bool landscape: MInputMethodQuick.appOrientation == 0 || MInputMethodQuick.appOrientation == 180
 
-        width: parent.width
+        width: landscape ? parent.width : parent.height
         height: 1
-        y: parent.height
-
+       // y: parent.height
+        transformOrigin: Item.TopLeft
         onRotationChanged: updateIMArea()
+        rotation: MInputMethodQuick.appOrientation
+        x: MInputMethodQuick.appOrientation == 180 || MInputMethodQuick.appOrientation == 270
+           ? parent.width : 0
+        y: MInputMethodQuick.appOrientation == 0 || MInputMethodQuick.appOrientation == 270
+           ? parent.height : 0
 
         KeyboardBase {
             id: keyboard
             layout: root.landscape ? vkb_landscape : vkb_portrait
-            width: MInputMethodQuick.screenWidth
+            width: root.landscape ? MInputMethodQuick.screenWidth: MInputMethodQuick.screenHeight
             height: root.landscape ? canvas.height/4 : canvas.height/3
             anchors.horizontalCenter: parent.horizontalCenter
 
