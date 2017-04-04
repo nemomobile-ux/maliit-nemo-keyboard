@@ -31,8 +31,7 @@
 
 import QtQuick 2.0
 import "KeyboardUiConstants.js" as UI
-import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.components 2.0 as PlasmaComponents
+
 
 KeyBase {
     id: aFunctKey
@@ -42,6 +41,7 @@ KeyBase {
     property int sourceWidth: -1
     property int sourceHeight: -1
     property string imagesrc: bgimg.source
+    property alias text:text
 
     topPadding: UI.portraitVerticalPadding
     bottomPadding: UI.portraitVerticalPadding
@@ -50,12 +50,31 @@ KeyBase {
 
     showPopper: false
 
-    PlasmaCore.FrameSvgItem {
+    BorderImage {
+        id: bgimg
+        //width: parent.width
+        //height: parent.height
+        border { left: 1; top: 4; right: 1; bottom:0 }
+        horizontalTileMode: BorderImage.Repeat
+        verticalTileMode: BorderImage.Repeat
+        source: parent.pressed ? "keyboard-key-portrait-function-pressed.png" : "keyboard-key-portrait-function.png"
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: parent.top
+            bottom:parent.bottom
+            topMargin: topPadding
+            leftMargin: leftPadding
+            rightMargin: rightPadding
+            bottomMargin: bottomPadding
+        }
+    }
+   /* PlasmaCore.FrameSvgItem {
         imagePath: "widgets/button"
         prefix: parent.pressed ? "pressed" : "normal"
         width: parent.width;
         height: parent.height;
-    }
+    }*/
 
     Image {
         anchors.centerIn: parent
@@ -63,11 +82,21 @@ KeyBase {
         sourceSize.width: (sourceWidth == -1) ? width : sourceWidth
         sourceSize.height: (sourceHeight == -1) ? height : sourceHeight
     }
-
-    PlasmaComponents.Label {
+    Text {
+        id: text
+        anchors.centerIn: parent
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        font.family: "sans"
+        font.pixelSize: fontSize
+        //font.bold: true
+        color: UI.TEXT_COLOR
+        text: caption
+    }
+    /*PlasmaComponents.Label {
         anchors.centerIn: parent
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         text: caption
-    }
+    }*/
 }

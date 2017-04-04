@@ -29,26 +29,31 @@
 
 import QtQuick 2.0
 import "KeyboardUiConstants.js" as UI
-import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.components 2.0 as PlasmaComponents
 
-PlasmaCore.FrameSvgItem {
+//PlasmaCore.FrameSvgItem {
+    Image {
     id: popper
-    imagePath: "widgets/background"
+    source: "popper.png"
+    //imagePath: "widgets/background"
 
-    width: popperText.width + margins.left + margins.right
-    height: popperText.height + margins.top + margins.bottom
+    width: popperText.width + (anchors.bottomMargin*2) //+ margins.left + margins.right
+    height: popperText.height + (anchors.bottomMargin*2) //+ margins.top + margins.bottom
     opacity: 0
     anchors.bottomMargin: 8
     property Item target: null
 
-    PlasmaComponents.Label {
+   // PlasmaComponents.Label {
+    Text {
         id: popperText
         text: ""
         anchors.centerIn: parent
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        font.pointSize: theme.defaultFont.pointSize * 2
+        //font.pointSize: theme.defaultFont.pointSize * 2
+        font.family: "sans"
+        font.pixelSize: 64
+        font.bold: true
+        color: "white"
     }
 
     states: State {

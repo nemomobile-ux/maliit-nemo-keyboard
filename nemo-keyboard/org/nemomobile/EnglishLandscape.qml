@@ -31,7 +31,6 @@
 
 import QtQuick 2.0
 import "KeyboardUiConstants.js" as UI
-import org.kde.plasma.core 2.0 as PlasmaCore
 
 Column {
     id: keyArea
@@ -115,7 +114,7 @@ Column {
             height: keyHeight
             topPadding: keyArea.topPadding
             leftPadding: keyArea.leftPadding
-            rightPadding: keyArea.rightPadding + 10
+            rightPadding: keyArea.rightPadding
             landscape: true
         }
     } //end Row3
@@ -124,7 +123,7 @@ Column {
         anchors.horizontalCenter: parent.horizontalCenter
 
         SymbolKey {
-            width: keyArea.width / 9
+            width: text.width+(keyArea.leftPadding*5)//keyArea.width / 9
             height: keyHeight
             landscape: true
             topPadding: keyArea.topPadding
@@ -157,7 +156,7 @@ Column {
             height: keyHeight
             topPadding: keyArea.topPadding
             leftPadding: keyArea.leftPadding
-            rightPadding: keyArea.rightPadding + 10
+            rightPadding: keyArea.rightPadding
             landscape: true
         }
     } //end Row4

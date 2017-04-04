@@ -19,5 +19,8 @@ core
 *.md5
 *.moc
 
+.directory
+*.list
+
 /coverage-report
 /coverage-build
