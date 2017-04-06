@@ -123,7 +123,7 @@ Column {
         anchors.horizontalCenter: parent.horizontalCenter
 
         SymbolKey {
-            width: text.width+(keyArea.leftPadding*5)//keyArea.width / 9
+            width: Math.max(text.width+(keyArea.leftPadding*5), keyArea.width / 9)
             height: keyHeight
             landscape: true
             topPadding: keyArea.topPadding

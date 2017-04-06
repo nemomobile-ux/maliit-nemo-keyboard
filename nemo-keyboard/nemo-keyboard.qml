@@ -98,7 +98,7 @@ Item {
             id: keyboard
             layout: root.landscape ? vkb_landscape : vkb_portrait
             width: root.landscape ? MInputMethodQuick.screenWidth: MInputMethodQuick.screenHeight
-            height: root.landscape ? canvas.height/4 : canvas.height/3
+            height: root.landscape ? canvas.height/3 : canvas.height/4
             anchors.horizontalCenter: parent.horizontalCenter
 
             onHeightChanged: {
