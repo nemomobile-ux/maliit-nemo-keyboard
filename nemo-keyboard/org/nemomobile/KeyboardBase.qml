@@ -61,13 +61,15 @@ MouseArea {
         height: width
         radius: 30//units.gridUnit
         border.width: 2
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
+        x:parent.width/2-tracker.width/2
+        y:parent.height/2-tracker.height/2
         z: 100
         color: "#0078bd"
+        Drag.active: mouseArea.drag.active
         Timer {
             id: movetimer
-            interval: 150
+            interval: 200
+            repeat: true
             property int key
             onTriggered: {
                 MInputMethodQuick.sendKey(key)
@@ -75,32 +77,66 @@ MouseArea {
         }
 
         MouseArea {
+            id:mouseArea
             width: 45//units.gridUnit * 1.5
             height: width
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            property int _startlX
-            property int _startlY
-            onPressed: {
-                _startlX = mouse.x
-                _startlY = mouse.y
+            property int _startlX: keyboard.width/2 - parent.width/2
+            property int _startlY: keyboard.height/2 - parent.width/2
+            drag.target: tracker
+            drag.axis: Drag.XAndYAxis
+            drag {
+                maximumX: _startlX+tracker.width
+                minimumX: _startlX-tracker.width
+                minimumY: _startlY-tracker.width
+                maximumY: _startlY+tracker.width
             }
-
+            drag.onActiveChanged: {
+                if(!drag.active) movetimer.stop()
+            }
             onPositionChanged: {
-                if ((mouse.y + _startlY < (height))) {
+                if(Math.abs(tracker.x - _startlX)>=Math.abs(tracker.y - _startlY)){
+                    if (tracker.x < _startlX) {
+                        movetimer.key = Qt.Key_Left
+                        movetimer.start()
+                    }else if (tracker.x > _startlX) {
+                        movetimer.key = Qt.Key_Right
+                        movetimer.start()
+                    }
+                }else if (tracker.y < _startlY) {
                     movetimer.key = Qt.Key_Up
                     movetimer.start()
-                }else if ((mouse.y - _startlY > (height))) {
+                }else if (tracker.y > _startlY) {
                     movetimer.key = Qt.Key_Down
-                    movetimer.start()
-                }else if ((mouse.x - _startlX < (width))) {
-                    movetimer.key = Qt.Key_Left
-                    movetimer.start()
-                }else if ((mouse.x + _startlX > (width))) {
-                    movetimer.key = Qt.Key_Right
                     movetimer.start()
                 }
             }
+
+            states: [
+                State {
+                    name: "default"
+                    when: !mouseArea.drag.active
+                }
+            ]
+
+            transitions: [
+                Transition {
+                    to: "default"
+                    NumberAnimation {
+                        target: tracker
+                        properties: "x"
+                        to: mouseArea._startlX
+                        duration: 100
+                    }
+                    NumberAnimation {
+                        target: tracker
+                        properties: "y"
+                        to: mouseArea._startlY
+                        duration: 100
+                    }
+                }
+            ]
         }
     }
 
@@ -113,7 +149,7 @@ MouseArea {
         verticalTileMode: BorderImage.Repeat
         source: "vkb-body.png"
     }
-   /* PlasmaCore.FrameSvgItem {
+    /* PlasmaCore.FrameSvgItem {
         imagePath: "widgets/background"
         y: -margins.top
         width: parent.width;
