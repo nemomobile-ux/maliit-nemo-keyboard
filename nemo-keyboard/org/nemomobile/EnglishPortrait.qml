@@ -56,7 +56,7 @@ Column {
     property variant accents_row3: ["", "", "cç", "", "", "nñ", ""]
 
     property int keyHeight: keyArea.height / 4
-    property int keyWidth: keyArea.width / 10
+    property int keyWidth: keyArea.width / 8
 
     Row { //Row 1
         anchors.horizontalCenter: parent.horizontalCenter
@@ -117,9 +117,11 @@ Column {
         anchors.horizontalCenter: parent.horizontalCenter
 
         SymbolKey {
-            width: keyWidth
+            width:  keyWidth
             height: keyHeight
             topPadding: keyArea.topPadding
+            leftPadding: keyArea.leftPadding
+            rightPadding: keyArea.rightPadding
         }
 
         PortraitCharacterKey {
@@ -146,6 +148,8 @@ Column {
             width: keyWidth
             height: keyHeight
             topPadding: keyArea.topPadding
+            leftPadding: keyArea.leftPadding
+            rightPadding: keyArea.rightPadding
         }
     }
 }

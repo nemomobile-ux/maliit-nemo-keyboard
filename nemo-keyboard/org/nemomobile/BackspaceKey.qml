@@ -32,7 +32,7 @@
 import QtQuick 2.0
 
 FunctionKey {
-    icon: "icon-m-input-methods-backspace.png"
+    icon: "icon-backspace.svg"
     repeat: true
     key: Qt.Key_Backspace
 }

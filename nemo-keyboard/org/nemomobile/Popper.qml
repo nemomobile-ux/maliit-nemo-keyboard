@@ -29,29 +29,28 @@
 
 import QtQuick 2.0
 import "KeyboardUiConstants.js" as UI
+import QtQuick.Controls.Styles.Nemo 1.0
 
-//PlasmaCore.FrameSvgItem {
+
     Image {
     id: popper
     source: "popper.png"
-    //imagePath: "widgets/background"
 
-    width: popperText.width + (anchors.bottomMargin*2) //+ margins.left + margins.right
-    height: popperText.height + (anchors.bottomMargin*2) //+ margins.top + margins.bottom
+    width: target.width*1.2
+    height:  target.height*1.2
     opacity: 0
     anchors.bottomMargin: 8
     property Item target: null
 
-   // PlasmaComponents.Label {
     Text {
         id: popperText
         text: ""
         anchors.centerIn: parent
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        //font.pointSize: theme.defaultFont.pointSize * 2
+        font.pointSize: Theme.fontSizeExtraLarge
         font.family: "sans"
-        font.pixelSize: 64
+        //font.pixelSize: parent.height/3
         font.bold: true
         color: "white"
     }

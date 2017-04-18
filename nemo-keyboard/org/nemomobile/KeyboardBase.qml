@@ -30,6 +30,7 @@
 
 import QtQuick 2.0
 import "KeyboardUiConstants.js" as UI
+import QtQuick.Controls.Styles.Nemo 1.0
 import com.meego.maliitquick 1.0
 
 MouseArea {
@@ -57,10 +58,10 @@ MouseArea {
 
     Rectangle {
         id: tracker
-        width: 30//units.gridUnit
+        width: Theme.itemWidthExtraSmall/2
         height: width
-        radius: 30//units.gridUnit
-        border.width: 2
+        radius: width
+        border.width: width/12
         x:parent.width/2-tracker.width/2
         y:parent.height/2-tracker.height/2
         z: 100
@@ -78,7 +79,7 @@ MouseArea {
 
         MouseArea {
             id:mouseArea
-            width: 45//units.gridUnit * 1.5
+            width: parent.width*1.5
             height: width
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
@@ -143,19 +144,11 @@ MouseArea {
     BorderImage {
         width: parent.width;
         height: parent.height
-        //width: MInputMethodQuick.screenWidth; height: MInputMethodQuick.screenWidth;
         border { left: 1; top: 4; right: 1; bottom:0 }
         horizontalTileMode: BorderImage.Repeat
         verticalTileMode: BorderImage.Repeat
         source: "vkb-body.png"
     }
-    /* PlasmaCore.FrameSvgItem {
-        imagePath: "widgets/background"
-        y: -margins.top
-        width: parent.width;
-        height: parent.height + margins.top;
-        enabledBorders: PlasmaCore.FrameSvgItem.TopBorder
-    }*/
 
     Connections {
         target: MInputMethodQuick

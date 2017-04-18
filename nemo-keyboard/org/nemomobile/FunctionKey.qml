@@ -41,7 +41,7 @@ KeyBase {
     property int sourceWidth: -1
     property int sourceHeight: -1
     property string imagesrc: bgimg.source
-    property alias text:text
+    //property alias text:text
 
     topPadding: UI.portraitVerticalPadding
     bottomPadding: UI.portraitVerticalPadding
@@ -52,33 +52,24 @@ KeyBase {
 
     BorderImage {
         id: bgimg
-        //width: parent.width
-        //height: parent.height
         border { left: 1; top: 4; right: 1; bottom:0 }
         horizontalTileMode: BorderImage.Repeat
         verticalTileMode: BorderImage.Repeat
         source: parent.pressed ? "keyboard-key-portrait-function-pressed.png" : "keyboard-key-portrait-function.png"
         anchors {
-            left: parent.left
-            right: parent.right
-            top: parent.top
-            bottom:parent.bottom
+            fill:parent
             topMargin: topPadding
             leftMargin: leftPadding
             rightMargin: rightPadding
             bottomMargin: bottomPadding
         }
     }
-   /* PlasmaCore.FrameSvgItem {
-        imagePath: "widgets/button"
-        prefix: parent.pressed ? "pressed" : "normal"
-        width: parent.width;
-        height: parent.height;
-    }*/
 
     Image {
         anchors.centerIn: parent
         source: icon
+        //width: parent.width/2
+        height: parent.height/1.5
         sourceSize.width: (sourceWidth == -1) ? width : sourceWidth
         sourceSize.height: (sourceHeight == -1) ? height : sourceHeight
     }
@@ -88,15 +79,9 @@ KeyBase {
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         font.family: "sans"
-        font.pixelSize: fontSize
+        font.pointSize: Theme.fontSizeMedium
         //font.bold: true
         color: UI.TEXT_COLOR
         text: caption
     }
-    /*PlasmaComponents.Label {
-        anchors.centerIn: parent
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-        text: caption
-    }*/
 }

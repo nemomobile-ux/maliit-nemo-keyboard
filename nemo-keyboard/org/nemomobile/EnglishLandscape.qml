@@ -54,7 +54,7 @@ Column {
     property int bottomPadding: UI.landscapeVerticalPadding
     property int leftPadding: UI.landscapeHorizontalPadding
     property int rightPadding: UI.landscapeHorizontalPadding
-    property int keyHeight: parent.height / 4
+    property int keyHeight: keyArea.height / 4
 
     Row { //Row 1
         anchors.horizontalCenter: parent.horizontalCenter
@@ -95,6 +95,7 @@ Column {
             topPadding: keyArea.topPadding
             leftPadding: keyArea.leftPadding
             rightPadding: keyArea.rightPadding
+            bottomPadding: keyArea.bottomPadding
             landscape: true
         }
 
@@ -115,6 +116,7 @@ Column {
             topPadding: keyArea.topPadding
             leftPadding: keyArea.leftPadding
             rightPadding: keyArea.rightPadding
+            bottomPadding: keyArea.bottomPadding
             landscape: true
         }
     } //end Row3
@@ -123,12 +125,13 @@ Column {
         anchors.horizontalCenter: parent.horizontalCenter
 
         SymbolKey {
-            width: Math.max(text.width+(keyArea.leftPadding*5), keyArea.width / 9)
+            width: keyArea.width / 8
             height: keyHeight
             landscape: true
             topPadding: keyArea.topPadding
             leftPadding: keyArea.leftPadding
             rightPadding: keyArea.rightPadding
+            bottomPadding: keyArea.bottomPadding
         }
 
         LandscapeCharacterKey {
@@ -152,11 +155,12 @@ Column {
         }
 
         EnterKey {
-            width: keyArea.width / 9
+            width: keyArea.width / 8
             height: keyHeight
             topPadding: keyArea.topPadding
             leftPadding: keyArea.leftPadding
             rightPadding: keyArea.rightPadding
+            bottomPadding: keyArea.bottomPadding
             landscape: true
         }
     } //end Row4

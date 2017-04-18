@@ -31,6 +31,8 @@
 
 import QtQuick 2.0
 import "KeyboardUiConstants.js" as UI
+import QtQuick.Controls.Nemo 1.0
+import QtQuick.Controls.Styles.Nemo 1.0
 
 KeyBase  {
     id: aCharKey
@@ -40,13 +42,12 @@ KeyBase  {
     property string symView
     property string symView2
     property string sizeType: "keyboard-key-43x60.png"
-    property int fontSize: UI.FONT_SIZE
+    property int fontSize: Theme.fontSizeLarge
     property alias text: key_label.text
     property string imagesrc: bgImage.source
 
     BorderImage {
         id: bgImage
-        width: 38; height: 60
         border {left: 1; top:4; right:1;bottom:0}
         horizontalTileMode: BorderImage.Repeat
         verticalTileMode: BorderImage.Repeat
@@ -64,27 +65,11 @@ KeyBase  {
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         font.family: "sans"
-        font.pixelSize: fontSize
+        font.pointSize: fontSize
         font.bold: true
         color: UI.TEXT_COLOR
         text: (inSymView && symView.length) > 0 ? (inSymView2 ? symView2 : symView)
                                                 : (isShifted ? captionShifted : caption)
     }
-
-   /* PlasmaCore.FrameSvgItem {
-        imagePath: "widgets/button"
-        prefix: parent.pressed? "pressed" : "normal"
-        width: parent.width;
-        height: parent.height;
-    }
-
-    PlasmaComponents.Label {
-        id: key_label
-        anchors.centerIn: parent
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-        text: (inSymView && symView.length) > 0 ? (inSymView2 ? symView2 : symView)
-                                                : (isShifted ? captionShifted : caption)
-    }*/
 }
 

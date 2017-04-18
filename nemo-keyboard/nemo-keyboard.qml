@@ -81,9 +81,9 @@ Item {
         // container at the of current orientation. allows actual keyboard to show relative to that.
         id: root
 
-        property bool landscape: MInputMethodQuick.appOrientation == 0 || MInputMethodQuick.appOrientation == 180
+        property bool landscape: MInputMethodQuick.appOrientation == 90 || MInputMethodQuick.appOrientation == 270
 
-        width: landscape ? parent.width : parent.height
+        width: landscape ? parent.height : parent.width
         height: 1
        // y: parent.height
         transformOrigin: Item.TopLeft
@@ -97,8 +97,8 @@ Item {
         KeyboardBase {
             id: keyboard
             layout: root.landscape ? vkb_landscape : vkb_portrait
-            width: root.landscape ? MInputMethodQuick.screenWidth: MInputMethodQuick.screenHeight
-            height: root.landscape ? canvas.height/3 : canvas.height/4
+            width: root.landscape ? MInputMethodQuick.screenHeight : MInputMethodQuick.screenWidth
+            height: root.landscape ? canvas.width/2 : canvas.height/3
             anchors.horizontalCenter: parent.horizontalCenter
 
             onHeightChanged: {
