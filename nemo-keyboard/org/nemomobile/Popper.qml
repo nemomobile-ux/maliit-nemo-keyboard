@@ -52,7 +52,7 @@ import QtQuick.Controls.Styles.Nemo 1.0
         font.family: "sans"
         //font.pixelSize: parent.height/3
         font.bold: true
-        color: "white"
+        color: Theme.textColor
     }
 
     states: State {

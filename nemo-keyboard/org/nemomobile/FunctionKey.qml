@@ -31,6 +31,8 @@
 
 import QtQuick 2.0
 import "KeyboardUiConstants.js" as UI
+import QtQuick.Controls.Styles.Nemo 1.0
+
 
 
 KeyBase {
@@ -81,7 +83,7 @@ KeyBase {
         font.family: "sans"
         font.pointSize: Theme.fontSizeMedium
         //font.bold: true
-        color: UI.TEXT_COLOR
+        color: Theme.textColor//UI.TEXT_COLOR
         text: caption
     }
 }

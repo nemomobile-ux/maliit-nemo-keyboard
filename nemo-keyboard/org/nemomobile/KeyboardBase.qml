@@ -65,7 +65,7 @@ MouseArea {
         x:parent.width/2-tracker.width/2
         y:parent.height/2-tracker.height/2
         z: 100
-        color: "#0078bd"
+        color: Theme.accentColor//"#0078bd"
         Drag.active: mouseArea.drag.active
         Timer {
             id: movetimer
