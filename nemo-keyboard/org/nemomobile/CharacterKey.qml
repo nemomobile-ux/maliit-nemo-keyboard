@@ -42,7 +42,7 @@ KeyBase  {
     property string symView
     property string symView2
     property string sizeType: "keyboard-key-43x60.png"
-    property int fontSize: Theme.fontSizeLarge
+    property int fontSize: Theme.fontSizeMedium
     property alias text: key_label.text
     property string imagesrc: bgImage.source
 
@@ -65,7 +65,7 @@ KeyBase  {
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         font.family: "sans"
-        font.pointSize: fontSize
+        font.pixelSize: fontSize
         font.bold: true
         color:Theme.textColor// UI.TEXT_COLOR
         text: (inSymView && symView.length) > 0 ? (inSymView2 ? symView2 : symView)

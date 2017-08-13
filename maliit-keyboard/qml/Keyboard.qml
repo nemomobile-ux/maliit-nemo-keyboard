@@ -195,7 +195,7 @@ Item {
             z: 1001
 
             // TODO: Make title font part of styling profile.
-            font.pointSize: 48
+            font.pixelSize: Theme.fontSizeMedium
             color: "white"
         }
     }

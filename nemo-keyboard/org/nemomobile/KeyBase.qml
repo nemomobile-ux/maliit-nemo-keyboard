@@ -38,7 +38,7 @@ Item {
     property int topPadding
     property int bottomPadding
     property bool landscape
-    property int fontSize: UI.FONT_SIZE
+    property int fontSize: Theme.fontSizeSmall
     property bool pressed
     property bool repeat
     property string text
