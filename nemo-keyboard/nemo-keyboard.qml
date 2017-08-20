@@ -46,12 +46,6 @@ Item {
             return
 
         var x = 0, y = 0, width = 0, height = 0;
-
-        /*var pos = keyboard.mapToItem(canvas, 0, -keyboard.height);
-        y = pos.y;
-        x = pos.x;
-        width = keyboard.width;
-        height = keyboard.height;*/
         var angle = MInputMethodQuick.appOrientation
 
         switch (angle) {
@@ -85,7 +79,6 @@ Item {
 
         width: landscape ? parent.height : parent.width
         height: 1
-       // y: parent.height
         transformOrigin: Item.TopLeft
         onRotationChanged: updateIMArea()
         rotation: MInputMethodQuick.appOrientation

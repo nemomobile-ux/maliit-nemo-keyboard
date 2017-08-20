@@ -81,7 +81,7 @@ KeyBase {
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         font.family: "sans"
-        font.pointSize: Theme.fontSizeMedium
+        font.pixelSize: Theme.fontSizeSmall
         //font.bold: true
         color: Theme.textColor//UI.TEXT_COLOR
         text: caption

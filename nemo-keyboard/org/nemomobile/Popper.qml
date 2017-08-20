@@ -48,7 +48,7 @@ import QtQuick.Controls.Styles.Nemo 1.0
         anchors.centerIn: parent
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        font.pointSize: Theme.fontSizeExtraLarge
+        font.pixelSize: Theme.fontSizeLarge
         font.family: "sans"
         //font.pixelSize: parent.height/3
         font.bold: true
