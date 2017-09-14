@@ -5,8 +5,8 @@ CharacterKey {
     width: keyArea.width / 10
     height: keyArea.height / 4
 
-    topPadding: UI.landscapeVerticalPadding
-    bottomPadding: UI.landscapeVerticalPadding
-    leftPadding: UI.landscapeHorizontalPadding
-    rightPadding: UI.landscapeHorizontalPadding
+    topPadding: Theme.itemSpacingExtraSmall
+    bottomPadding: topPadding
+    leftPadding: Theme.itemSpacingExtraSmall/2
+    rightPadding: leftPadding
 }

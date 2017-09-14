@@ -50,10 +50,10 @@ Column {
     property variant accents_row2: ["aäàâáãå", "", "dð", "", "", "", "", "", ""]
     property variant accents_row3: ["", "", "cç", "", "", "nñ", ""]
 
-    property int topPadding: UI.landscapeVerticalPadding
-    property int bottomPadding: UI.landscapeVerticalPadding
-    property int leftPadding: UI.landscapeHorizontalPadding
-    property int rightPadding: UI.landscapeHorizontalPadding
+    property int topPadding: Theme.itemSpacingExtraSmall
+    property int bottomPadding: topPadding
+    property int leftPadding: Theme.itemSpacingExtraSmall/2
+    property int rightPadding: leftPadding
     property int keyHeight: keyArea.height / 4
 
     Row { //Row 1

@@ -45,6 +45,7 @@ KeyBase  {
     property int fontSize: Theme.fontSizeMedium
     property alias text: key_label.text
     property string imagesrc: bgImage.source
+    key: Qt.Key_Multi_key
 
     BorderImage {
         id: bgImage

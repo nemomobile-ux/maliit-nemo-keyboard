@@ -39,7 +39,7 @@ import QtQuick.Controls.Styles.Nemo 1.0
     width: target.width*1.2
     height:  target.height*1.2
     opacity: 0
-    anchors.bottomMargin: 8
+    anchors.bottomMargin: Theme.itemSpacingExtraSmall
     property Item target: null
 
     Text {
@@ -50,7 +50,6 @@ import QtQuick.Controls.Styles.Nemo 1.0
         verticalAlignment: Text.AlignVCenter
         font.pixelSize: Theme.fontSizeLarge
         font.family: "sans"
-        //font.pixelSize: parent.height/3
         font.bold: true
         color: Theme.textColor
     }
