@@ -45,10 +45,10 @@ KeyBase {
     property string imagesrc: bgimg.source
     //property alias text:text
 
-    topPadding: UI.portraitVerticalPadding
-    bottomPadding: UI.portraitVerticalPadding
-    leftPadding: UI.portraitHorizontalPadding
-    rightPadding: UI.portraitHorizontalPadding
+    topPadding: Theme.itemSpacingExtraSmall
+    bottomPadding: topPadding
+    leftPadding: Theme.itemSpacingExtraSmall/2
+    rightPadding: leftPadding
 
     showPopper: false
 
@@ -71,16 +71,20 @@ KeyBase {
         anchors.centerIn: parent
         source: icon
         //width: parent.width/2
-        height: parent.height/1.5
+        anchors.horizontalCenterOffset: (leftPadding - rightPadding) / 2
+        //height: parent.height/1.5
         sourceSize.width: (sourceWidth == -1) ? width : sourceWidth
         sourceSize.height: (sourceHeight == -1) ? height : sourceHeight
     }
     Text {
         id: text
         anchors.centerIn: parent
+        anchors.horizontalCenterOffset: Math.round((leftPadding - rightPadding) / 2)
+        width: parent.width - leftPadding - rightPadding - 4
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         font.family: "sans"
+        fontSizeMode: Text.HorizontalFit
         font.pixelSize: Theme.fontSizeSmall
         //font.bold: true
         color: Theme.textColor//UI.TEXT_COLOR

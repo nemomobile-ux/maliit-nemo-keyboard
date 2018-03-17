@@ -36,10 +36,15 @@ import QtQuick.Window 2.2
 Item {
     id: canvas
 
-    //width: MInputMethodQuick.screenWidth
-    //height: MInputMethodQuick.screenHeight
-    width: Screen.desktopAvailableWidth
-    height: Screen.desktopAvailableHeight
+    width: MInputMethodQuick.screenWidth
+    height: MInputMethodQuick.screenHeight
+    //width: Screen.desktopAvailableWidth
+    //height: Screen.desktopAvailableHeight
+
+    property bool portraitRotated: width > height
+    property bool portraitLayout: portraitRotated ?
+                                      (MInputMethodQuick.appOrientation == 90 || MInputMethodQuick.appOrientation == 270) :
+                                      (MInputMethodQuick.appOrientation == 0 || MInputMethodQuick.appOrientation == 180)
 
     function updateIMArea() {
         if (!MInputMethodQuick.active)
@@ -93,6 +98,8 @@ Item {
             width: root.landscape ? MInputMethodQuick.screenHeight : MInputMethodQuick.screenWidth
             height: root.landscape ? canvas.width/2 : canvas.height/3
             anchors.horizontalCenter: parent.horizontalCenter
+
+            portraitMode: portraitLayout
 
             onHeightChanged: {
                 if (MInputMethodQuick.active)

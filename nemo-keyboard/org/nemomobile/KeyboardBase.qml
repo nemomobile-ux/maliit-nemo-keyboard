@@ -1,6 +1,8 @@
 /*
  * This file is part of Maliit plugins
  *
+ * Copyright (C) 2017 Eetu Kahelin
+ * Copyright (C) 2012-2013 Jolla Ltd.
  * Copyright (C) 2012 John Brooks <john.brooks@dereferenced.net>
  * Copyright (C) Jakub Pavelek <jpavelek@live.com>
  *
@@ -32,14 +34,33 @@ import QtQuick 2.0
 import "KeyboardUiConstants.js" as UI
 import QtQuick.Controls.Styles.Nemo 1.0
 import com.meego.maliitquick 1.0
+import "touchpointarray.js" as ActivePoints
 
-MouseArea {
+
+Item {
     id: keyboard
 
     property Item layout
-    property Item pressedKey
+    property bool portraitMode
 
+    //property Item pressedKey
+    property Item lastPressedKey
+    property Item lastInitialKey
+
+    property string deadKeyAccent
+    property bool shiftKeyPressed
+    // counts how many character keys have been pressed since the ActivePoints array was empty
+    property int characterKeyCounter
+    property bool closeSwipeActive
+    property int closeSwipeThreshold: height*.3
+
+    height: layout ? layout.height : 0
+    onPortraitModeChanged: cancelAllTouchPoints()
     onLayoutChanged: if (layout) layout.parent = keyboard
+    // if height changed while touch point was being held
+    // we can't rely on point values anymore
+    onHeightChanged: closeSwipeActive = false
+
 
     // Can be changed to PreeditTestHandler to have another mode of input
     InputHandler {
@@ -49,7 +70,7 @@ MouseArea {
     Popper {
         id: popper
         z: 10
-        target: pressedKey
+        target: lastPressedKey
     }
     Timer {
         id: pressTimer
@@ -65,7 +86,7 @@ MouseArea {
         x:parent.width/2-tracker.width/2
         y:parent.height/2-tracker.height/2
         z: 100
-        color: Theme.accentColor//"#0078bd"
+        color: Theme.accentColor
         Drag.active: mouseArea.drag.active
         Timer {
             id: movetimer
@@ -85,6 +106,7 @@ MouseArea {
             anchors.verticalCenter: parent.verticalCenter
             property int _startlX: keyboard.width/2 - parent.width/2
             property int _startlY: keyboard.height/2 - parent.width/2
+            property bool moved
             drag.target: tracker
             drag.axis: Drag.XAndYAxis
             drag {
@@ -94,24 +116,36 @@ MouseArea {
                 maximumY: _startlY+tracker.width
             }
             drag.onActiveChanged: {
-                if(!drag.active) movetimer.stop()
+                if(!drag.active)
+                {
+                    movetimer.stop()
+                    movetimer.key = -1
+                }
             }
             onPositionChanged: {
-                if(Math.abs(tracker.x - _startlX)>=Math.abs(tracker.y - _startlY)){
-                    if (tracker.x < _startlX) {
+                moved=true
+                if(Math.abs(tracker.x - mouseArea._startlX)>=Math.abs(tracker.y - mouseArea._startlY)){
+                    if (tracker.x < mouseArea._startlX) {
                         movetimer.key = Qt.Key_Left
                         movetimer.start()
-                    }else if (tracker.x > _startlX) {
+                    }else if (tracker.x > mouseArea._startlX) {
                         movetimer.key = Qt.Key_Right
                         movetimer.start()
                     }
-                }else if (tracker.y < _startlY) {
+                }else if (tracker.y < mouseArea._startlY) {
                     movetimer.key = Qt.Key_Up
                     movetimer.start()
-                }else if (tracker.y > _startlY) {
+                }else if (tracker.y > mouseArea._startlY) {
                     movetimer.key = Qt.Key_Down
                     movetimer.start()
                 }
+            }
+            onReleased: {
+                if(!moved) {
+                    keyboard.handlePressed(keyboard.createPointArray((tracker.x + mouse.x), tracker.y + mouse.y))
+                    keyboard.handleReleased(keyboard.createPointArray((tracker.x + mouse.x), tracker.y + mouse.y))
+                }
+                moved=false
             }
 
             states: [
@@ -166,48 +200,80 @@ MouseArea {
         }
     }
 
-    /* Mouse handling */
-    property int _startX
-    property int _startY
 
-    onPressed: {
-        if (keyboard.childAt(mouse.x, mouse.y) == tracker) {
-            mouse.accepted = false
-        }
+    MouseArea {
+        enabled: false
+        anchors.fill: parent
 
-        _startX = mouse.x
-        _startY = mouse.y
+        onPressed: keyboard.handlePressed(keyboard.createPointArray(mouse.x, mouse.y))
+        onPositionChanged: keyboard.handleUpdated(keyboard.createPointArray(mouse.x, mouse.y))
+        onReleased: keyboard.handleReleased(keyboard.createPointArray(mouse.x, mouse.y))
+        onCanceled: keyboard.cancelAllTouchPoints()
+    }
+
+    MultiPointTouchArea {
+        anchors.fill: parent
+
+        onPressed: keyboard.handlePressed(touchPoints)
+        onUpdated: keyboard.handleUpdated(touchPoints)
+        onReleased: keyboard.handleReleased(touchPoints)
+        onCanceled: keyboard.handleCanceled(touchPoints)
+    }
+
+    function createPointArray(pointX, pointY) {
+        var pointArray = new Array
+        pointArray.push({"pointId": 1, "x": pointX, "y": pointY,
+                            "startX": pointX, "startY": pointY })
+        return pointArray
+    }
+
+    function handlePressed(touchPoints) {
+        closeSwipeActive = true
         pressTimer.start()
-        updatePressedKey(mouse.x, mouse.y)
+        for (var i = 0; i < touchPoints.length; i++) {
+            var point = ActivePoints.addPoint(touchPoints[i])
+            updatePressedKey(point)
+        }
     }
 
-    onPositionChanged: {
-        // Hide keyboard on flick down
-        if (pressTimer.running && (mouse.y - _startY > (height * 0.3))) {
-            hideAnimation.running = true;
-            if (pressedKey) {
-                inputHandler._handleKeyRelease()
-                pressedKey.pressed = false
+    function handleUpdated(touchPoints) {
+        for (var i = 0; i < touchPoints.length; i++) {
+            var incomingPoint = touchPoints[i]
+            var point = ActivePoints.findById(incomingPoint.pointId)
+            if (point === null)
+                continue
+
+            point.x = incomingPoint.x
+            point.y = incomingPoint.y
+
+            if (ActivePoints.array.length === 1
+                    && closeSwipeActive
+                    && pressTimer.running
+                    && (point.y - point.startY > closeSwipeThreshold)) {
+                // swiped down to close keyboard
+                hideAnimation.running = true;
+                MInputMethodQuick.userHide()
+                if (point.pressedKey) {
+                    inputHandler._handleKeyRelease()
+                    point.pressedKey.pressed = false
+                }
+                lastPressedKey = null
+                pressTimer.stop()
+                ActivePoints.remove(point)
+                return
             }
-            pressedKey = null
-            return
-        }
 
-        updatePressedKey(mouse.x, mouse.y)
-    }
-
-    onCanceled: {
-        if (pressedKey) {
-            pressedKey.pressed = false
-            pressedKey = null
+            updatePressedKey(point)
         }
     }
 
-    onReleased: {
+    function triggerKey(pressedKey) {
+
         if (pressedKey === null)
             return
 
-        inputHandler._handleKeyClick()
+        inputHandler._handleKeyClick(pressedKey)
+
         pressedKey.clicked()
         inputHandler._handleKeyRelease()
 
@@ -215,25 +281,122 @@ MouseArea {
         pressedKey = null
     }
 
-    function updatePressedKey(x, y) {
-        var key = keyAt(x, y)
-        if (pressedKey === key)
+    function handleReleased(touchPoints) {
+
+        for (var i = 0; i < touchPoints.length; i++) {
+            var point = ActivePoints.findById(touchPoints[i].pointId)
+            if (point === null)
+                continue
+
+            if (point.pressedKey === null) {
+                ActivePoints.remove(point)
+                continue
+            }
+
+
+            triggerKey(point.pressedKey)
+
+
+            if (point.pressedKey.key !== Qt.Key_Shift) {
+                deadKeyAccent = ""
+            }
+            if (point.pressedKey === lastPressedKey) {
+                lastPressedKey = null
+            }
+
+            ActivePoints.remove(point)
+        }
+
+        if (ActivePoints.array.length === 0) {
+            characterKeyCounter = 0
+        }
+    }
+
+    function isPressed(keyType) {
+        return ActivePoints.findByKeyType(keyType) !== null
+    }
+
+    function handleCanceled(touchPoints) {
+        for (var i = 0; i < touchPoints.length; i++) {
+            cancelTouchPoint(touchPoints[i].pointId)
+        }
+    }
+
+    function cancelTouchPoint(pointId) {
+        var point = ActivePoints.findById(pointId)
+        if (!point)
             return
 
-        inputHandler._handleKeyRelease()
+        if (point.pressedKey) {
+            inputHandler._handleKeyRelease()
+            point.pressedKey.pressed = false
+            if (lastPressedKey === point.pressedKey) {
+                lastPressedKey = null
+            }
+        }
+        if (lastInitialKey === point.initialKey) {
+            lastInitialKey = null
+        }
 
-        if (pressedKey !== null)
-            pressedKey.pressed = false
+        ActivePoints.remove(point)
+    }
 
-        pressedKey = key
+    function cancelAllTouchPoints() {
+        while (ActivePoints.array.length > 0) {
+            cancelTouchPoint(ActivePoints.array[0].pointId)
+        }
+    }
 
-        if (pressedKey !== null) {
-            pressedKey.pressed = true
-            inputHandler._handleKeyPress(pressedKey)
+    function updatePressedKey(point) {
+        var key = keyAt(point.x, point.y)
+        if (point.pressedKey === key)
+            return
+
+        if (point.pressedKey !== null) {
+            inputHandler._handleKeyRelease()
+            point.pressedKey.pressed = false
+        }
+
+        point.pressedKey = key
+        if (!point.initialKey) {
+            point.initialKey = point.pressedKey
+            lastInitialKey = point.initialKey
+        }
+
+        lastPressedKey = point.pressedKey
+
+        if (point.pressedKey !== null) {
+            // when typing fast with two finger, one finger might be still pressed when the other hits screen.
+            // on that case, trigger input from previous character
+            releasePreviousCharacterKey(point)
+            point.pressedKey.pressed = true
+            inputHandler._handleKeyPress(point.pressedKey)
+        }
+    }
+
+    function existingCharacterKey(ignoredPoint) {
+        for (var i = 0; i < ActivePoints.array.length; i++) {
+            var point = ActivePoints.array[i]
+            if (point !== ignoredPoint
+                    && point.pressedKey
+                    && point.pressedKey.key === Qt.Key_Multi_key) {
+                return point
+            }
+        }
+    }
+
+    function releasePreviousCharacterKey(ignoredPoint) {
+        var existing = existingCharacterKey(ignoredPoint)
+        if (existing) {
+            triggerKey(existing.pressedKey)
+            ActivePoints.remove(existing)
         }
     }
 
     function keyAt(x, y) {
+        if (layout === null)
+            return null
+
         var item = layout
         x -= layout.x
         y -= layout.y
@@ -254,11 +417,15 @@ MouseArea {
     function resetKeyboard() {
         if (!layout)
             return
+        cancelAllTouchPoints()
         layout.isShifted = false
         layout.isShiftLocked = false
         layout.inSymView = false
         layout.inSymView2 = false
         inputHandler._reset()
+        lastPressedKey = null
+        lastInitialKey = null
+        deadKeyAccent = ""
     }
 
     function applyAutocaps() {

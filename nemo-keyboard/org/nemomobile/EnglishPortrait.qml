@@ -38,10 +38,10 @@ Column {
     width: parent.width
     height: parent.height
 
-    property int topPadding: UI.portraitVerticalPadding
-    property int bottomPadding: UI.portraitVerticalPadding
-    property int leftPadding: UI.portraitHorizontalPadding
-    property int rightPadding: UI.portraitHorizontalPadding
+    property int topPadding: Theme.itemSpacingExtraSmall
+    property int bottomPadding: topPadding
+    property int leftPadding: Theme.itemSpacingExtraSmall/2
+    property int rightPadding: leftPadding
 
     property bool isShifted
     property bool isShiftLocked
