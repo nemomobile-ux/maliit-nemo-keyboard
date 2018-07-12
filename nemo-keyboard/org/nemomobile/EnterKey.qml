@@ -29,11 +29,11 @@
  *
  */
 
-import QtQuick 2.0
+import QtQuick 2.6
 
 FunctionKey {
-    icon: MInputMethodQuick.actionKeyOverride.icon
-    repeat: true
     caption: MInputMethodQuick.actionKeyOverride.label
-    key: Qt.Key_Return
+    icon: "icon-enter.svg"
+    repeat: true
+    key: Qt.Key_Backspace
 }

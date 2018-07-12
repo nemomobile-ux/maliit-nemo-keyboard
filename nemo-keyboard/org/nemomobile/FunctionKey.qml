@@ -29,7 +29,7 @@
  *
  */
 
-import QtQuick 2.0
+import QtQuick 2.6
 import "KeyboardUiConstants.js" as UI
 import QtQuick.Controls.Styles.Nemo 1.0
 
@@ -70,9 +70,13 @@ KeyBase {
     Image {
         anchors.centerIn: parent
         source: icon
-        //width: parent.width/2
+        width: parent.width/1.5
+        height: width
+
+        fillMode: Image.PreserveAspectFit
+
         anchors.horizontalCenterOffset: (leftPadding - rightPadding) / 2
-        //height: parent.height/1.5
+
         sourceSize.width: (sourceWidth == -1) ? width : sourceWidth
         sourceSize.height: (sourceHeight == -1) ? height : sourceHeight
     }

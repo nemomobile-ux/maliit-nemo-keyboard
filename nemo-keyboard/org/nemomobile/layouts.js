@@ -1,9 +1,5 @@
 /*
- * This file is part of Maliit plugins
- *
- * Copyright (C) 2013 Jolla ltd and/or its subsidiary(-ies). All rights reserved.
- *
- * Contact: Pekka Vuorela <pekka.vuorela@jollamobile.com>
+ * Copyright (C) 2018 Chupligin Sergey <neochapay@gmail.com>
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -29,21 +25,27 @@
  *
  */
 
-import QtQuick 2.6
-import "KeyboardUiConstants.js" as UI
+.pragma library
 
-Item {
-    property int leftPadding
-    property int rightPadding
-    property int topPadding
-    property int bottomPadding
-    property bool landscape
-    property int fontSize: Theme.fontSizeSmall
-    property bool pressed
-    property bool repeat
-    property string text
-    property int key: Qt.Key_unknown
-    property bool showPopper: true
-
-    signal clicked
+var keyboards = {
+    en: {
+        name: "English",
+        local_name: "English",
+        row1: ["q1€", "w2£", "e3$", "r4¥", "t5₹", "y6%", "u7<", "i8>", "o9[", "p0]"],
+        row2: ["a*`", "s#^", "d+|", "f-_", "g=§", "h({", "j)}", "k?¿", "l!¡"],
+        row3: ["z@«", "x~»", "c/\"", "v\\“", "b'”", "n;„", "m:&"],
+        accents_row1: ["", "", "eèéêë", "", "tþ", "yý", "uûùúü", "iîïìí", "oöôòó", ""],
+        accents_row2: ["aäàâáãå", "", "dð", "", "", "", "", "", ""],
+        accents_row3: ["", "", "cç", "", "", "nñ", ""]
+    },
+    ru : {
+        name: "Russian",
+        local_name: "Русский",
+        row1: ["й1€", "ц2£", "у3$", "к4¥", "е5₹", "н6%", "г7<", "ш8>", "щ9[", "з0]", "х0]"],
+        row2: ["ф*`", "ы#^", "в+|", "а-_", "п=§", "р{}", "о?¿", "л!¡", "д!¡", "ж!¡", "э!¡"],
+        row3: ["я@«", "ч~»", "с/\"", "м\\“", "и'”", "т;„", "ь:&", "б;„", "ю:&"],
+        accents_row1: ["", "", "eèéêë", "", "tþ", "yý", "uûùúü", "iîïìí", "oöôòó", ""],
+        accents_row2: ["aäàâáãå", "", "dð", "", "", "", "", "", ""],
+        accents_row3: ["", "", "cç", "", "", "nñ", ""]
+    }
 }

@@ -29,7 +29,7 @@
  *
  */
 
-import QtQuick 2.0
+import QtQuick 2.6
 import org.nemomobile 1.0
 import QtQuick.Window 2.2
 
@@ -106,12 +106,12 @@ Item {
                     y = -height
             }
 
-            EnglishLandscape {
+            KeyboardLandscape {
                 id: vkb_landscape
                 visible: keyboard.layout == vkb_landscape
             }
 
-            EnglishPortrait {
+            KeyboardPortrait {
                 id: vkb_portrait
                 visible: keyboard.layout == vkb_portrait
             }

@@ -30,7 +30,7 @@
  *
  */
 
-import QtQuick 2.0
+import QtQuick 2.6
 import "KeyboardUiConstants.js" as UI
 import QtQuick.Controls.Styles.Nemo 1.0
 import com.meego.maliitquick 1.0
