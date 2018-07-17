@@ -30,6 +30,9 @@
  */
 
 import QtQuick 2.0
+
+import org.nemomobile.configuration 1.0
+
 import "KeyboardUiConstants.js" as UI
 import "layouts.js"  as KLayouts
 
@@ -49,19 +52,56 @@ Column {
     property bool inSymView
     property bool inSymView2
 
-    property string currentKeyboardLayout: "en"
+    property variant row1: KLayouts.keyboards[lastKeyboardLayout.value]["row1"]
+    property variant row2: KLayouts.keyboards[lastKeyboardLayout.value]["row2"]
+    property variant row3: KLayouts.keyboards[lastKeyboardLayout.value]["row3"]
+    property variant accents_row1: KLayouts.keyboards[lastKeyboardLayout.value]["accents_row1"]
+    property variant accents_row2: KLayouts.keyboards[lastKeyboardLayout.value]["accents_row2"]
+    property variant accents_row3: KLayouts.keyboards[lastKeyboardLayout.value]["accents_row3"]
 
-    property variant row1: KLayouts.keyboards[currentKeyboardLayout]["row1"]
-    property variant row2: KLayouts.keyboards[currentKeyboardLayout]["row2"]
-    property variant row3: KLayouts.keyboards[currentKeyboardLayout]["row3"]
-    property variant accents_row1: KLayouts.keyboards[currentKeyboardLayout]["accents_row1"]
-    property variant accents_row2: KLayouts.keyboards[currentKeyboardLayout]["accents_row2"]
-    property variant accents_row3: KLayouts.keyboards[currentKeyboardLayout]["accents_row3"]
+    property var aviableKeyboards: []
 
     property int totalCharButtons: Math.max(row1.length, row2.length, row3.length)
 
     property int keyHeight: keyArea.height / 4
     property int keyWidth: (keyArea.width-leftPadding*(totalCharButtons+1))/totalCharButtons
+
+    ConfigurationValue {
+        id: enabledKeyboardLayouts
+        key: "/home/glacier/keyboard/enabledLayouts"
+        defaultValue: "en"
+        onValueChanged: {
+            aviableKeyboards = enabledKeyboardLayouts.value.split(";")
+        }
+    }
+
+    ConfigurationValue {
+        id: lastKeyboardLayout
+        key: "/home/glacier/keyboard/lastKeyboard"
+        defaultValue: "en"
+    }
+
+
+    Component.onCompleted: {
+        aviableKeyboards = enabledKeyboardLayouts.value.split(";")
+        if(aviableKeyboards.length == 1) {
+            lastKeyboardLayout.value = aviableKeyboards[0]
+        }
+    }
+
+    function changeCurrentKeyboard() {
+        if(aviableKeyboards.length == 1) {
+            lastKeyboardLayout.value = aviableKeyboards[0]
+        }
+
+        var currentLayoutID = aviableKeyboards.indexOf(lastKeyboardLayout.value);
+
+        if(currentLayoutID === aviableKeyboards.length-1) {
+            lastKeyboardLayout.value = aviableKeyboards[0];
+        } else {
+            lastKeyboardLayout.value = aviableKeyboards[currentLayoutID+1];
+        }
+    }
 
     Row { //Row 1
         anchors.horizontalCenter: parent.horizontalCenter
@@ -139,12 +179,9 @@ Column {
             height: keyHeight
             icon: "image://theme/globe"
             onClicked: {
-                if(currentKeyboardLayout == "en") {
-                    currentKeyboardLayout = "ru"
-                } else {
-                    currentKeyboardLayout = "en"
-                }
+                changeCurrentKeyboard();
             }
+            visible: aviableKeyboards.length != 1
         }
 
         PortraitCharacterKey {
@@ -157,7 +194,7 @@ Column {
 
         PortraitCharacterKey {
             id: spaceKey
-            width: keyArea.width/2
+            width: (aviableKeyboards.length != 1) ? keyArea.width/2 : keyArea.width/2+(keyArea.width/10)
             caption: " "
             captionShifted: " "
             showPopper: false

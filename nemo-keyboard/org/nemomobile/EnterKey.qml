@@ -35,5 +35,5 @@ FunctionKey {
     caption: MInputMethodQuick.actionKeyOverride.label
     icon: "icon-enter.svg"
     repeat: true
-    key: Qt.Key_Backspace
+    key: Qt.Key_Return
 }

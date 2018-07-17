@@ -31,6 +31,7 @@
 
 import QtQuick 2.0
 import "KeyboardUiConstants.js" as UI
+import "layouts.js" as KLayouts
 
 Column {
     id: keyArea
@@ -57,8 +58,6 @@ Column {
     property int keyHeight: keyArea.height / 4
 
     property int totalCharButtons: Math.max(row1.length, row2.length, row3.length)
-
-    property int keyHeight: keyArea.height / 4
     property int keyWidth: (keyArea.width-leftPadding*(totalCharButtons+1))/totalCharButtons
 
 
@@ -133,7 +132,6 @@ Column {
         SymbolKey {
             width: keyArea.width / 8
             height: keyHeight
-            landscape: true
             topPadding: keyArea.topPadding
             leftPadding: keyArea.leftPadding
             rightPadding: keyArea.rightPadding
