@@ -30,8 +30,6 @@
  */
 
 import QtQuick 2.0
-import "KeyboardUiConstants.js" as UI
-import "layouts.js" as KLayouts
 
 Column {
     id: keyArea
@@ -44,12 +42,14 @@ Column {
     property bool inSymView
     property bool inSymView2
 
-    property variant row1: KLayouts.keyboards[currentKeyboardLayout]["row1"]
-    property variant row2: KLayouts.keyboards[currentKeyboardLayout]["row2"]
-    property variant row3: KLayouts.keyboards[currentKeyboardLayout]["row3"]
-    property variant accents_row1: KLayouts.keyboards[currentKeyboardLayout]["accents_row1"]
-    property variant accents_row2: KLayouts.keyboards[currentKeyboardLayout]["accents_row2"]
-    property variant accents_row3: KLayouts.keyboards[currentKeyboardLayout]["accents_row3"]
+    property variant row1: parent.row1
+    property variant row2: parent.row2
+    property variant row3: parent.row3
+    property variant accents_row1: parent.accents_row1
+    property variant accents_row2: parent.accents_row2
+    property variant accents_row3: parent.accents_row3
+
+    property var availableKeyboards: parent.availableKeyboards
 
     property int topPadding: Theme.itemSpacingExtraSmall
     property int bottomPadding: topPadding
@@ -60,6 +60,9 @@ Column {
     property int totalCharButtons: Math.max(row1.length, row2.length, row3.length)
     property int keyWidth: (keyArea.width-leftPadding*(totalCharButtons+1))/totalCharButtons
 
+    function changeCurrentKeyboard() {
+        parent.changeCurrentKeyboard()
+    }
 
     Row { //Row 1
         anchors.horizontalCenter: parent.horizontalCenter
@@ -138,6 +141,18 @@ Column {
             bottomPadding: keyArea.bottomPadding
         }
 
+        FunctionKey{
+            id: switchKey
+            width: keyArea.width / 10
+            height: keyHeight
+            icon: "image://theme/globe"
+            onClicked: {
+                keyArea.changeCurrentKeyboard();
+            }
+            visible: availableKeyboards.length != 1
+        }
+
+
         LandscapeCharacterKey {
             width: keyArea.width / 10
             caption: ","
@@ -145,7 +160,7 @@ Column {
             sizeType: "keyboard-key-120x46.png"
         }
         LandscapeCharacterKey {
-            width: keyArea.width / 2
+            width: (availableKeyboards.length != 1) ? keyArea.width/2 : keyArea.width/2+(keyArea.width/10)
             caption: " "
             captionShifted: " "
             showPopper: false
@@ -157,6 +172,16 @@ Column {
             captionShifted: "."
             sizeType: "keyboard-key-120x46.png"
         }
+
+        EnterKey {
+            id: entKey
+            width: keyArea.width / 8
+            height: keyHeight
+            topPadding: keyArea.topPadding
+            leftPadding: keyArea.leftPadding
+            rightPadding: keyArea.rightPadding
+        }
+
     } //end Row4
 }
 

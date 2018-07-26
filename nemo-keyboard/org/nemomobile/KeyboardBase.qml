@@ -31,10 +31,12 @@
  */
 
 import QtQuick 2.6
-import "KeyboardUiConstants.js" as UI
 import QtQuick.Controls.Styles.Nemo 1.0
 import com.meego.maliitquick 1.0
+import org.nemomobile.configuration 1.0
+
 import "touchpointarray.js" as ActivePoints
+import "layouts.js"  as KLayouts
 
 
 Item {
@@ -54,6 +56,15 @@ Item {
     property bool closeSwipeActive
     property int closeSwipeThreshold: height*.3
 
+    property variant row1: KLayouts.keyboards[lastKeyboardLayout.value]["row1"]
+    property variant row2: KLayouts.keyboards[lastKeyboardLayout.value]["row2"]
+    property variant row3: KLayouts.keyboards[lastKeyboardLayout.value]["row3"]
+    property variant accents_row1: KLayouts.keyboards[lastKeyboardLayout.value]["accents_row1"]
+    property variant accents_row2: KLayouts.keyboards[lastKeyboardLayout.value]["accents_row2"]
+    property variant accents_row3: KLayouts.keyboards[lastKeyboardLayout.value]["accents_row3"]
+
+    property var availableKeyboards: []
+
     height: layout ? layout.height : 0
     onPortraitModeChanged: cancelAllTouchPoints()
     onLayoutChanged: if (layout) layout.parent = keyboard
@@ -61,6 +72,28 @@ Item {
     // we can't rely on point values anymore
     onHeightChanged: closeSwipeActive = false
 
+    ConfigurationValue {
+        id: enabledKeyboardLayouts
+        key: "/home/glacier/keyboard/enabledLayouts"
+        defaultValue: "en"
+        onValueChanged: {
+            availableKeyboards = enabledKeyboardLayouts.value.split(";")
+        }
+    }
+
+    ConfigurationValue {
+        id: lastKeyboardLayout
+        key: "/home/glacier/keyboard/lastKeyboard"
+        defaultValue: "en"
+    }
+
+
+    Component.onCompleted: {
+        availableKeyboards = enabledKeyboardLayouts.value.split(";")
+        if(availableKeyboards.length == 1) {
+            lastKeyboardLayout.value = availableKeyboards[0]
+        }
+    }
 
     // Can be changed to PreeditTestHandler to have another mode of input
     InputHandler {
@@ -445,6 +478,20 @@ Item {
             } else {
                 layout.isShifted = false
             }
+        }
+    }
+
+    function changeCurrentKeyboard() {
+        if(availableKeyboards.length == 1) {
+            lastKeyboardLayout.value = availableKeyboards[0]
+        }
+
+        var currentLayoutID = availableKeyboards.indexOf(lastKeyboardLayout.value);
+
+        if(currentLayoutID === availableKeyboards.length-1) {
+            lastKeyboardLayout.value = availableKeyboards[0];
+        } else {
+            lastKeyboardLayout.value = availableKeyboards[currentLayoutID+1];
         }
     }
 }
