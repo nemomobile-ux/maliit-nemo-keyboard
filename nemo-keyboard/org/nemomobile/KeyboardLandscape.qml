@@ -1,9 +1,9 @@
 /*
- * This file is part of Maliit plugins
+ * This file is part of Maliit Plugins
  *
- * Copyright (C) Jakub Pavelek <jpavelek@live.com>
- * Copyright (C) 2012 John Brooks <john.brooks@dereferenced.net>
- * Copyright (C) 2013 Jolla Ltd.
+ * Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies). All rights reserved.
+ *
+ * Contact: Mohammad Anwari <Mohammad.Anwari@nokia.com>
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -30,7 +30,6 @@
  */
 
 import QtQuick 2.0
-import "KeyboardUiConstants.js" as UI
 
 Column {
     id: keyArea
@@ -38,31 +37,40 @@ Column {
     width: parent.width
     height: parent.height
 
-    property int topPadding: Theme.itemSpacingExtraSmall
-    property int bottomPadding: topPadding
-    property int leftPadding: Theme.itemSpacingExtraSmall/2
-    property int rightPadding: leftPadding
-
     property bool isShifted
     property bool isShiftLocked
     property bool inSymView
     property bool inSymView2
 
-    property variant row1: ["q1€", "w2£", "e3$", "r4¥", "t5₹", "y6%", "u7<", "i8>", "o9[", "p0]"]
-    property variant row2: ["a*`", "s#^", "d+|", "f-_", "g=§", "h({", "j)}", "k?¿", "l!¡"]
-    property variant row3: ["z@«", "x~»", "c/\"", "v\\“", "b'”", "n;„", "m:&"]
-    property variant accents_row1: ["", "", "eèéêë", "", "tþ", "yý", "uûùúü", "iîïìí", "oöôòó", ""]
-    property variant accents_row2: ["aäàâáãå", "", "dð", "", "", "", "", "", ""]
-    property variant accents_row3: ["", "", "cç", "", "", "nñ", ""]
+    property variant row1: parent.row1
+    property variant row2: parent.row2
+    property variant row3: parent.row3
+    property variant accents_row1: parent.accents_row1
+    property variant accents_row2: parent.accents_row2
+    property variant accents_row3: parent.accents_row3
 
+    property var availableKeyboards: parent.availableKeyboards
+
+    property int topPadding: Theme.itemSpacingExtraSmall
+    property int bottomPadding: topPadding
+    property int leftPadding: Theme.itemSpacingExtraSmall/2
+    property int rightPadding: leftPadding
     property int keyHeight: keyArea.height / 4
-    property int keyWidth: keyArea.width / 8
+
+    property int totalCharButtons: Math.max(row1.length, row2.length, row3.length)
+    property int keyWidth: (keyArea.width-leftPadding*(totalCharButtons+1))/totalCharButtons
+
+    function changeCurrentKeyboard() {
+        parent.changeCurrentKeyboard()
+    }
 
     Row { //Row 1
         anchors.horizontalCenter: parent.horizontalCenter
+
         Repeater {
             model: row1
-            PortraitCharacterKey {
+            LandscapeCharacterKey {
+                sizeType: "keyboard-key-72x46.png"
                 caption: row1[index][0]
                 captionShifted: row1[index][0].toUpperCase()
                 symView: row1[index][1]
@@ -73,84 +81,107 @@ Column {
 
     Row { //Row 2
         anchors.horizontalCenter: parent.horizontalCenter
+
         Repeater {
             model: row2
-            PortraitCharacterKey {
+            LandscapeCharacterKey {
+                sizeType: "keyboard-key-72x46.png"
                 caption: row2[index][0]
                 captionShifted: row2[index][0].toUpperCase()
                 symView: row2[index][1]
                 symView2: row2[index][2]
             }
         }
-    }
+    } //end Row2
 
     Row { //Row 3
         anchors.horizontalCenter: parent.horizontalCenter
+
         ShiftKey {
-            width: keyWidth
-            height: keyHeight
-            topPadding: keyArea.topPadding
-        }
-
-        Row {
-            Repeater {
-                model: row3
-                PortraitCharacterKey {
-                    caption: row3[index][0]
-                    captionShifted: row3[index][0].toUpperCase()
-                    symView: row3[index][1]
-                    symView2: row3[index][2]
-                }
-            }
-        }
-
-        BackspaceKey {
-            width: keyWidth
+            width: keyArea.width / 8
             height: keyHeight
             topPadding: keyArea.topPadding
             leftPadding: keyArea.leftPadding
             rightPadding: keyArea.rightPadding
+            bottomPadding: keyArea.bottomPadding
+            landscape: true
         }
-    }
+
+        Repeater {
+            model: row3
+            LandscapeCharacterKey {
+                sizeType: "keyboard-key-72x46.png"
+                caption: row3[index][0]
+                captionShifted: row3[index][0].toUpperCase()
+                symView: row3[index][1]
+                symView2: row3[index][2]
+            }
+        }
+
+        BackspaceKey {
+            width: keyArea.width / 8
+            height: keyHeight
+            topPadding: keyArea.topPadding
+            leftPadding: keyArea.leftPadding
+            rightPadding: keyArea.rightPadding
+            bottomPadding: keyArea.bottomPadding
+            landscape: true
+        }
+    } //end Row3
 
     Row { //Row 4
         anchors.horizontalCenter: parent.horizontalCenter
 
         SymbolKey {
-            width:  keyWidth
+            width: keyArea.width / 8
             height: keyHeight
             topPadding: keyArea.topPadding
             leftPadding: keyArea.leftPadding
             rightPadding: keyArea.rightPadding
+            bottomPadding: keyArea.bottomPadding
         }
 
-        PortraitCharacterKey {
+        FunctionKey{
+            id: switchKey
+            width: keyArea.width / 10
+            height: keyHeight
+            icon: "image://theme/globe"
+            onClicked: {
+                keyArea.changeCurrentKeyboard();
+            }
+            visible: availableKeyboards.length != 1
+        }
+
+
+        LandscapeCharacterKey {
+            width: keyArea.width / 10
             caption: ","
             captionShifted: ","
-            sizeType: "keyboard-key-56x60.png"
+            sizeType: "keyboard-key-120x46.png"
         }
-
-        PortraitCharacterKey {
+        LandscapeCharacterKey {
+            width: (availableKeyboards.length != 1) ? keyArea.width/2 : keyArea.width/2+(keyArea.width/10)
             caption: " "
             captionShifted: " "
             showPopper: false
-            width: keyArea.width/2
-            sizeType: "keyboard-key-136x60.png"
+            sizeType: "keyboard-key-228x46.png"
         }
-
-        PortraitCharacterKey {
+        LandscapeCharacterKey {
+            width: keyArea.width / 10
             caption: "."
             captionShifted: "."
-            sizeType: "keyboard-key-56x60.png"
+            sizeType: "keyboard-key-120x46.png"
         }
 
         EnterKey {
-            width: keyWidth
+            id: entKey
+            width: keyArea.width / 8
             height: keyHeight
             topPadding: keyArea.topPadding
             leftPadding: keyArea.leftPadding
             rightPadding: keyArea.rightPadding
         }
-    }
+
+    } //end Row4
 }
 
