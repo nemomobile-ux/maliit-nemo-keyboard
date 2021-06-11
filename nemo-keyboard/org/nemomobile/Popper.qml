@@ -32,13 +32,14 @@ import "KeyboardUiConstants.js" as UI
 import QtQuick.Controls.Styles.Nemo 1.0
 
 
-    Image {
+Image {
     id: popper
     source: "popper.png"
 
-    width: target.width*1.2
-    height:  target.height*1.2
+    width: target ? target.width*1.2 : 0
+    height: target ? target.height*1.2 : 0
     opacity: 0
+    visible: target ? true : false
     anchors.bottomMargin: Theme.itemSpacingExtraSmall
     property Item target: null
 
@@ -67,7 +68,7 @@ import QtQuick.Controls.Styles.Nemo 1.0
             target: popper
             opacity: 1
 
-            x: popper.parent.mapFromItem(target, 0, 0).x + (target.width - popper.width) / 2
+            x: target ? popper.parent.mapFromItem(target, 0, 0).x + (target.width - popper.width) / 2 : popper.parent.mapFromItem(target, 0, 0).x + (0 - popper.width) / 2
             y: popper.parent.mapFromItem(target, 0, 0).y - popper.height
         }
     }

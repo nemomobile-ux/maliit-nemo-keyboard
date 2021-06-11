@@ -5,6 +5,7 @@
  * Copyright (C) 2012-2013 Jolla Ltd.
  * Copyright (C) 2012 John Brooks <john.brooks@dereferenced.net>
  * Copyright (C) Jakub Pavelek <jpavelek@live.com>
+ * Copyright (C) 2021 Chupligin Sergey <neochapay@gmail.com>
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -219,16 +220,11 @@ Item {
 
     Connections {
         target: MInputMethodQuick
-        onCursorPositionChanged: {
+        function onCursorPositionChanged() {
             applyAutocaps()
         }
-        onFocusTargetChanged: {
-            if (activeEditor) {
-                resetKeyboard()
-                applyAutocaps()
-            }
-        }
-        onInputMethodReset: {
+
+        function onInputMethodReset() {
             inputHandler._reset()
         }
     }

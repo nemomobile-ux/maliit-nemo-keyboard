@@ -2,6 +2,7 @@
  * This file is part of Maliit plugins
  *
  * Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies). All rights reserved.
+ * Copyright (C) 2021 Chupligin Sergey <neochapay@gmail.com>
  *
  * Contact: Mohammad Anwari <Mohammad.Anwari@nokia.com>
  *
@@ -92,6 +93,12 @@ Item {
         y: MInputMethodQuick.appOrientation == 0 || MInputMethodQuick.appOrientation == 270
            ? parent.height : 0
 
+        Rectangle{
+            id: keyboardBack
+            anchors.fill: keyboard
+            color: Theme.backgroundColor
+        }
+
         KeyboardBase {
             id: keyboard
             layout: root.landscape ? vkb_landscape : vkb_portrait
@@ -118,7 +125,7 @@ Item {
 
             Connections {
                 target: MInputMethodQuick
-                onActiveChanged: {
+                function onActiveChanged() {
                     if (MInputMethodQuick.active) {
                         hideAnimation.stop()
                         showAnimation.start()
