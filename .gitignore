@@ -13,7 +13,7 @@ core
 *.gcno
 *~
 *.swp
-*.pro.user
+*.user
 *.core
 *.tar.*
 *.md5
