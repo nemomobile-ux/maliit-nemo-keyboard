@@ -8,7 +8,7 @@ include(FeatureSummary)
 include(GNUInstallDirs)
 
 install(FILES qml/nemo-keyboard.qml
-    DESTINATION /usr/lib/maliit/plugins/)
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/maliit/plugins/)
 
 install(DIRECTORY qml/org/nemomobile
-    DESTINATION /usr/share/maliit/plugins/org)
+    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/maliit/plugins/org)
