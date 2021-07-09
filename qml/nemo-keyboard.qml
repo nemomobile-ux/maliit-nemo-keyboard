@@ -32,7 +32,6 @@
 
 import QtQuick 2.6
 import org.nemomobile 1.0
-import QtQuick.Window 2.2
 
 Item {
     id: canvas
