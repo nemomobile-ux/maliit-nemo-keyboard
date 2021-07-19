@@ -47,12 +47,23 @@ KeyBase  {
     property string imagesrc: bgImage.source
     key: Qt.Key_Multi_key
 
+/*
     BorderImage {
         id: bgImage
         border {left: 1; top:4; right:1;bottom:0}
         horizontalTileMode: BorderImage.Repeat
         verticalTileMode: BorderImage.Repeat
         source: parent.pressed ? "keyboard-key-portrait-pressed.png" : "keyboard-key-portrait.png"
+        anchors.fill: parent
+        anchors.leftMargin: leftPadding
+        anchors.rightMargin: rightPadding
+        anchors.topMargin: topPadding
+        anchors.bottomMargin: bottomPadding
+    }
+*/
+
+    Rectangle {
+        color: parent.pressed ? Theme.fillDarkColor : Theme.fillColor
         anchors.fill: parent
         anchors.leftMargin: leftPadding
         anchors.rightMargin: rightPadding
