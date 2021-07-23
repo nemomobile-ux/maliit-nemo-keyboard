@@ -44,10 +44,10 @@ KeyBase  {
     property string sizeType: "keyboard-key-43x60.png"
     property int fontSize: Theme.fontSizeMedium
     property alias text: key_label.text
-    property string imagesrc: bgImage.source
     key: Qt.Key_Multi_key
 
 /*
+    property string imagesrc: bgImage.source
     BorderImage {
         id: bgImage
         border {left: 1; top:4; right:1;bottom:0}
