@@ -31,7 +31,13 @@
  */
 
 import QtQuick 2.6
+import QtQuick.Controls.Nemo 1.0
+import QtQuick.Controls.Styles.Nemo 1.0
+
 import org.nemomobile 1.0
+
+import org.nemomobile.configuration 1.0
+import org.nemomobile.predictor 1.0
 
 Item {
     id: canvas
@@ -76,6 +82,31 @@ Item {
         MInputMethodQuick.setScreenRegion(Qt.rect(x, y, width, height))
     }
 
+    ConfigurationValue {
+        id: enablePredictor
+        key: "/home/glacier/keyboard/enablePredictor"
+        defaultValue: true
+    }
+
+    PresagePredictor {
+        id: predictor
+        language: "en"
+
+        property int shiftState: keyboard.isShifted ? (keyboard.isShiftLocked ? PresagePredictor.ShiftLocked
+                                                                              : PresagePredictor.ShiftLatched)
+                                                    : PresagePredictor.NoShift
+        onShiftStateChanged: setShiftState(shiftState)
+
+        function abort(word) {
+            var oldPreedit = presageHandler.preedit
+            presageHandler.commit(word)
+            presageHandler.preedit = oldPreedit.substr(word.length, oldPreedit.length-word.length)
+            if (presageHandler.preedit !== "") {
+                MInputMethodQuick.sendPreedit(presageHandler.preedit)
+            }
+        }
+    }
+
     Item {
         // container at the of current orientation. allows actual keyboard to show relative to that.
         id: root
@@ -96,6 +127,50 @@ Item {
             id: keyboardBack
             anchors.fill: keyboard
             color: Theme.backgroundColor
+        }
+
+        Rectangle{
+            id: predictorView
+            width: keyboard.width
+            height: Theme.itemHeightLarge
+            color: Theme.backgroundColor
+
+            anchors.bottom: keyboard.top
+            visible: enablePredictor.value
+
+            ListView{
+                id: predictionList
+                anchors.fill: parent
+                orientation: ListView.Horizontal
+                model: predictor.engine
+                delegate: Rectangle{
+                    id: candidate
+                    height: Theme.itemHeightLarge
+                    width: candidateLabel.width + Theme.itemSpacingSmall*2
+                    color: Theme.backgroundColor
+
+                    Label{
+                        id: candidateLabel
+                        text: model.text
+                        anchors.centerIn: parent
+                    }
+                }
+            }
+
+            Connections {
+                target: predictor.engine
+                onPredictionsChanged: {
+                    predictionList.positionViewAtBeginning()
+                }
+            }
+
+            Connections{
+                target: MInputMethodQuick
+                onEditorStateUpdate: {
+                    var text = MInputMethodQuick.surroundingText.substring(0, MInputMethodQuick.cursorPosition)
+                    predictor.setContext(text)
+                }
+            }
         }
 
         KeyboardBase {

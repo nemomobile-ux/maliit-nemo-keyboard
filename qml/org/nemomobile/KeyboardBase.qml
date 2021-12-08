@@ -45,6 +45,7 @@ Item {
 
     property Item layout
     property bool portraitMode
+    property string languageCode: "en"
 
     //property Item pressedKey
     property Item lastPressedKey
@@ -86,8 +87,8 @@ Item {
         id: lastKeyboardLayout
         key: "/home/glacier/keyboard/lastKeyboard"
         defaultValue: "en"
+        onValueChanged: keyboard.languageCode = lastKeyboardLayout.value
     }
-
 
     Component.onCompleted: {
         availableKeyboards = enabledKeyboardLayouts.value.split(";")
