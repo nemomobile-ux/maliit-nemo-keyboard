@@ -57,6 +57,7 @@ Item {
     property bool closeSwipeActive
     property int closeSwipeThreshold: height*.3
 
+    property string name: KLayouts.keyboards[lastKeyboardLayout.value]["name"]
     property variant row1: KLayouts.keyboards[lastKeyboardLayout.value]["row1"]
     property variant row2: KLayouts.keyboards[lastKeyboardLayout.value]["row2"]
     property variant row3: KLayouts.keyboards[lastKeyboardLayout.value]["row3"]

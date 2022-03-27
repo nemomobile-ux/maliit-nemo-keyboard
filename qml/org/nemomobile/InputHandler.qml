@@ -83,8 +83,10 @@ Item {
             resetShift = false
         }
 
-        if (pressedKey.text.length) {
+        if ((pressedKey.key === Qt.Key_Multi_key) && (pressedKey.text.length)) {
             MInputMethodQuick.sendCommit(pressedKey.text)
+        } else if (pressedKey.key === Qt.Key_Space) {
+            MInputMethodQuick.sendCommit(" ")
         } else if (pressedKey.key === Qt.Key_Return) {
             MInputMethodQuick.activateActionKey()
         } else if (pressedKey.key === Qt.Key_Backspace) {
