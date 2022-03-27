@@ -47,6 +47,7 @@ Column {
     property bool inSymView
     property bool inSymView2
 
+    property string name: parent.name
     property variant row1: parent.row1
     property variant row2: parent.row2
     property variant row3: parent.row3
@@ -157,8 +158,9 @@ Column {
         PortraitCharacterKey {
             id: spaceKey
             width: (availableKeyboards.length != 1) ? keyArea.width/2 : keyArea.width/2+(keyArea.width/10)
-            caption: " "
-            captionShifted: " "
+            caption: keyArea.name
+            captionShifted: keyArea.name
+            key: Qt.Key_Space
             showPopper: false
             sizeType: "keyboard-key-136x60.png"
         }
