@@ -1,6 +1,6 @@
 /*
  * This file is part of Maliit plugins
- *
+ * Copyright (C) 2022 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
  * Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies). All rights reserved.
  *
  * Contact: Jakub Pavelek <jpavelek@live.com>
@@ -30,7 +30,6 @@
  */
 
 import QtQuick 2.6
-import "KeyboardUiConstants.js" as UI
 import QtQuick.Controls.Nemo 1.0
 import QtQuick.Controls.Styles.Nemo 1.0
 
@@ -41,26 +40,9 @@ KeyBase  {
     property string captionShifted
     property string symView
     property string symView2
-    property string sizeType: "keyboard-key-43x60.png"
-    property int fontSize: Theme.fontSizeMedium
     property alias text: key_label.text
     key: Qt.Key_Multi_key
 
-/*
-    property string imagesrc: bgImage.source
-    BorderImage {
-        id: bgImage
-        border {left: 1; top:4; right:1;bottom:0}
-        horizontalTileMode: BorderImage.Repeat
-        verticalTileMode: BorderImage.Repeat
-        source: parent.pressed ? "keyboard-key-portrait-pressed.png" : "keyboard-key-portrait.png"
-        anchors.fill: parent
-        anchors.leftMargin: leftPadding
-        anchors.rightMargin: rightPadding
-        anchors.topMargin: topPadding
-        anchors.bottomMargin: bottomPadding
-    }
-*/
 
     Rectangle {
         color: parent.pressed ? Theme.fillDarkColor : Theme.fillColor
@@ -76,10 +58,10 @@ KeyBase  {
         anchors.centerIn: parent
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        font.family: "sans"
-        font.pixelSize: fontSize
+        font.family: Theme.fontFamily
+        font.pixelSize: aCharKey.height*0.5
         font.bold: true
-        color:Theme.textColor// UI.TEXT_COLOR
+        color:Theme.textColor
         text: (inSymView && symView.length) > 0 ? (inSymView2 ? symView2 : symView)
                                                 : (isShifted ? captionShifted : caption)
     }
