@@ -31,9 +31,7 @@
  */
 
 import QtQuick 2.6
-import "KeyboardUiConstants.js" as UI
 import QtQuick.Controls.Styles.Nemo 1.0
-
 
 KeyBase {
     id: aFunctKey
@@ -95,11 +93,10 @@ KeyBase {
         width: parent.width - leftPadding - rightPadding - 4
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        font.family: "sans"
+        font.family: Theme.fontFamily
         fontSizeMode: Text.HorizontalFit
         font.pixelSize: Theme.fontSizeSmall
-        //font.bold: true
-        color: Theme.textColor//UI.TEXT_COLOR
+        color: Theme.textColor
         text: caption
     }
 }

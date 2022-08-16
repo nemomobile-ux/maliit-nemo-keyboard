@@ -1,6 +1,6 @@
 /*
  * This file is part of Maliit plugins
- *
+ * Copyright (C) 2022 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
  * Copyright (C) 2013 Jolla ltd and/or its subsidiary(-ies). All rights reserved.
  *
  * Contact: Pekka Vuorela <pekka.vuorela@jollamobile.com>
@@ -30,7 +30,6 @@
  */
 
 import QtQuick 2.6
-import "KeyboardUiConstants.js" as UI
 
 Item {
     property int leftPadding

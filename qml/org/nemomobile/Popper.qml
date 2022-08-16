@@ -1,6 +1,6 @@
 /*
  * This file is part of Maliit plugins
- *
+ * Copyright (C) 2022 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
  * Copyright (C) Jakub Pavelek <jpavelek@live.com>
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -28,7 +28,6 @@
  */
 
 import QtQuick 2.6
-import "KeyboardUiConstants.js" as UI
 import QtQuick.Controls.Styles.Nemo 1.0
 
 
@@ -50,7 +49,7 @@ Image {
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         font.pixelSize: Theme.fontSizeLarge
-        font.family: "sans"
+        font.family: Theme.fontFamily
         font.bold: true
         color: Theme.textColor
     }

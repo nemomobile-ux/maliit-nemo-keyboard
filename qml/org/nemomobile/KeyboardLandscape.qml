@@ -1,6 +1,6 @@
 /*
  * This file is part of Maliit Plugins
- *
+ * Copyright (C) 2022 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
  * Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies). All rights reserved.
  *
  * Contact: Mohammad Anwari <Mohammad.Anwari@nokia.com>
@@ -71,7 +71,6 @@ Column {
         Repeater {
             model: row1
             LandscapeCharacterKey {
-                sizeType: "keyboard-key-72x46.png"
                 caption: row1[index][0]
                 captionShifted: row1[index][0].toUpperCase()
                 symView: row1[index][1]
@@ -86,7 +85,6 @@ Column {
         Repeater {
             model: row2
             LandscapeCharacterKey {
-                sizeType: "keyboard-key-72x46.png"
                 caption: row2[index][0]
                 captionShifted: row2[index][0].toUpperCase()
                 symView: row2[index][1]
@@ -111,7 +109,6 @@ Column {
         Repeater {
             model: row3
             LandscapeCharacterKey {
-                sizeType: "keyboard-key-72x46.png"
                 caption: row3[index][0]
                 captionShifted: row3[index][0].toUpperCase()
                 symView: row3[index][1]
@@ -158,7 +155,6 @@ Column {
             width: keyArea.width / 10
             caption: ","
             captionShifted: ","
-            sizeType: "keyboard-key-120x46.png"
         }
         LandscapeCharacterKey {
             width: (availableKeyboards.length != 1) ? keyArea.width/2 : keyArea.width/2+(keyArea.width/10)
@@ -166,13 +162,11 @@ Column {
             captionShifted: keyArea.name
             key: Qt.Key_Space
             showPopper: false
-            sizeType: "keyboard-key-228x46.png"
         }
         LandscapeCharacterKey {
             width: keyArea.width / 10
             caption: "."
             captionShifted: "."
-            sizeType: "keyboard-key-120x46.png"
         }
 
         EnterKey {

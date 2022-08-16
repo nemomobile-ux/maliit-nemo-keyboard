@@ -4,6 +4,7 @@
  * Copyright (C) Jakub Pavelek <jpavelek@live.com>
  * Copyright (C) 2012 John Brooks <john.brooks@dereferenced.net>
  * Copyright (C) 2013 Jolla Ltd.
+ * Copyright (C) 2022 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -152,7 +153,6 @@ Column {
             width: keyArea.width / 10
             caption: ","
             captionShifted: ","
-            sizeType: "keyboard-key-56x60.png"
         }
 
         PortraitCharacterKey {
@@ -162,7 +162,6 @@ Column {
             captionShifted: keyArea.name
             key: Qt.Key_Space
             showPopper: false
-            sizeType: "keyboard-key-136x60.png"
         }
 
         PortraitCharacterKey {
@@ -170,7 +169,6 @@ Column {
             width: keyArea.width / 10
             caption: "."
             captionShifted: "."
-            sizeType: "keyboard-key-56x60.png"
         }
 
         EnterKey {
