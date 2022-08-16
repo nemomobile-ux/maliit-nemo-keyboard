@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2018-2022 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -22,10 +22,7 @@ import QtQuick.Controls 1.0
 import QtQuick.Controls.Nemo 1.0
 import QtQuick.Controls.Styles.Nemo 1.0
 
-import org.nemomobile.systemsettings 1.0
-import org.nemomobile.configuration 1.0
-
-import "file:///usr/share/maliit/plugins/org/nemomobile/layouts.js" as KeyboardLayouts
+import org.glacier.keyboard 1.0
 
 Page {
     id: keyboardSettingsPlugin
@@ -35,16 +32,8 @@ Page {
         title: qsTr("Keyboard")
     }
 
-    property var enabledKeyboardsLayouts: []
-
-    ListModel{
+    KeyboardsLayoutModel{
         id: keyboardModel
-    }
-
-    ConfigurationValue {
-        id: enabledKeyboardLayouts
-        key: "/home/glacier/keyboard/enabledLayouts"
-        defaultValue: "en"
     }
 
     ListView{
@@ -66,34 +55,8 @@ Page {
             showNext: false
             iconVisible: false
             onClicked: {
-                is_enabled = !is_enabled
-                updateKeyboards();
+                keyboardModel.setKeyboardLayoutEnabled(code, !is_enabled)
             }
         }
-
-    }
-
-
-    Component.onCompleted: {
-        enabledKeyboardsLayouts = enabledKeyboardLayouts.value.split(";")
-
-        for(var layout in KeyboardLayouts.keyboards) {
-            keyboardModel.append({
-                     "id" :  layout,
-                     "name": KeyboardLayouts.keyboards[layout]["name"],
-                     "local_name": KeyboardLayouts.keyboards[layout]["local_name"],
-                     "is_enabled": (enabledKeyboardsLayouts.indexOf(layout) > -1) })
-        }
-    }
-    function updateKeyboards() {
-        var aKeyboard = "";
-        for(var i = 0; i < keyboardModel.count; i++) {
-            var kLayout = keyboardModel.get(i);
-            if(kLayout.is_enabled) {
-                aKeyboard += kLayout.id+";"
-            }
-        }
-        //TODO: Do we allow disable all keyboards layout ?
-        enabledKeyboardLayouts.value = aKeyboard.slice(0,-1)
     }
 }

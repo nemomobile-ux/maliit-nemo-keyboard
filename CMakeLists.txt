@@ -7,8 +7,16 @@ project(maliit-nemo-keyboard
 include(FeatureSummary)
 include(GNUInstallDirs)
 
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_INSTALL_PREFIX "/usr" CACHE PATH "..." FORCE)
+
 set(QT_MIN_VERSION "5.11.0")
 find_package(Qt5 ${QT_MIN_VERSION} COMPONENTS Gui Qml Quick REQUIRED)
+find_package(PkgConfig)
+pkg_check_modules(MLITE5 mlite5 REQUIRED IMPORTED_TARGET)
 
 install(FILES qml/nemo-keyboard.qml
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/maliit/plugins/)
@@ -16,4 +24,8 @@ install(FILES qml/nemo-keyboard.qml
 install(DIRECTORY qml/org/nemomobile
     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/maliit/plugins/org)
 
+install(DIRECTORY layouts/
+    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/glacier-keyboard/layouts)
+
+add_subdirectory("src")
 add_subdirectory("settings-plugin")

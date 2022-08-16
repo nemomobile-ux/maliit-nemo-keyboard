@@ -56,7 +56,7 @@ Column {
     property variant accents_row2: parent.accents_row2
     property variant accents_row3: parent.accents_row3
 
-    property var availableKeyboards: parent.availableKeyboards
+    property var enabledKeyboards: parent.enabledKeyboards
 
     property int totalCharButtons: Math.max(row1.length, row2.length, row3.length)
 
@@ -145,7 +145,7 @@ Column {
             onClicked: {
                 keyArea.changeCurrentKeyboard();
             }
-            visible: availableKeyboards.length != 1
+            visible: enabledKeyboards.length > 1
         }
 
         PortraitCharacterKey {
@@ -157,7 +157,7 @@ Column {
 
         PortraitCharacterKey {
             id: spaceKey
-            width: (availableKeyboards.length != 1) ? keyArea.width/2 : keyArea.width/2+(keyArea.width/10)
+            width: (enabledKeyboards.length != 1) ? keyArea.width/2 : keyArea.width/2+(keyArea.width/10)
             caption: keyArea.name
             captionShifted: keyArea.name
             key: Qt.Key_Space
