@@ -2,6 +2,7 @@
  * This file is part of Maliit plugins
  *
  * Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies). All rights reserved.
+ * Copyright (C) 2022 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
  *
  * Contact: Jakub Pavelek <jpavelek@live.com>
  *
@@ -34,7 +35,6 @@ import "KeyboardUiConstants.js" as UI
 import QtQuick.Controls.Styles.Nemo 1.0
 
 
-
 KeyBase {
     id: aFunctKey
 
@@ -54,7 +54,13 @@ KeyBase {
 
     BorderImage {
         id: bgimg
-        border { left: 1; top: 4; right: 1; bottom:0 }
+        border {
+            left: 1;
+            top: 4;
+            right: 1;
+            bottom:0
+        }
+
         horizontalTileMode: BorderImage.Repeat
         verticalTileMode: BorderImage.Repeat
         source: parent.pressed ? "keyboard-key-portrait-function-pressed.png" : "keyboard-key-portrait-function.png"
@@ -65,21 +71,23 @@ KeyBase {
             rightMargin: rightPadding
             bottomMargin: bottomPadding
         }
+
+        Image {
+            anchors.centerIn: parent
+            source: icon
+            width: parent.width
+            height: parent.height
+
+            fillMode: Image.PreserveAspectFit
+
+            anchors.horizontalCenterOffset: (leftPadding - rightPadding) / 2
+
+            sourceSize.width: (sourceWidth == -1) ? width : sourceWidth
+            sourceSize.height: (sourceHeight == -1) ? height : sourceHeight
+        }
     }
 
-    Image {
-        anchors.centerIn: parent
-        source: icon
-        width: parent.width/1.5
-        height: width
 
-        fillMode: Image.PreserveAspectFit
-
-        anchors.horizontalCenterOffset: (leftPadding - rightPadding) / 2
-
-        sourceSize.width: (sourceWidth == -1) ? width : sourceWidth
-        sourceSize.height: (sourceHeight == -1) ? height : sourceHeight
-    }
     Text {
         id: text
         anchors.centerIn: parent
