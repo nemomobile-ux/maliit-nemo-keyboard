@@ -1,5 +1,4 @@
 import QtQuick 2.6
-import "KeyboardUiConstants.js" as UI
 
 CharacterKey {
     width: keyArea.width / 10

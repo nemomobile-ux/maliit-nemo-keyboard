@@ -78,7 +78,6 @@ Item {
     // we can't rely on point values anymore
     onHeightChanged: closeSwipeActive = false
 
-    // Can be changed to PreeditTestHandler to have another mode of input
     InputHandler {
         id: inputHandler
     }
