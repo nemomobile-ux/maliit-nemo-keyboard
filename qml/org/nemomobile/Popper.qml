@@ -44,11 +44,10 @@ Image {
 
     Text {
         id: popperText
-        text: ""
         anchors.centerIn: parent
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        font.pixelSize: Theme.fontSizeLarge
+        font.pixelSize: popper.height*0.8
         font.family: Theme.fontFamily
         font.bold: true
         color: Theme.textColor
