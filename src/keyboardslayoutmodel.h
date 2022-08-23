@@ -30,6 +30,7 @@ class KeyboardsLayoutModel : public QAbstractListModel
     Q_OBJECT
     Q_PROPERTY(QStringList enabledKeyboards READ enabledKeyboards NOTIFY enabledKeyboardsChanged)
     Q_PROPERTY(QString lastKeyboardLayout READ lastKeyboardLayout WRITE setLastKeyboardLayout NOTIFY lastKeyboardLayoutChanged)
+    Q_PROPERTY(int contentType READ contentType WRITE setContentType NOTIFY contentTypeChanged)
 
 public:
     KeyboardsLayoutModel(QObject *parent = nullptr);
@@ -47,17 +48,24 @@ public:
     QString lastKeyboardLayout();
     void setLastKeyboardLayout(QString code);
 
+    int contentType() {return m_contentType;}
+    void setContentType(int type);
+    QJsonObject getContentTypeLayout(QString jsonString) const;
+
 signals:
     void enabledKeyboardsChanged();
     void lastKeyboardLayoutChanged();
+    void contentTypeChanged();
 
 private:
     QHash<int,QByteArray> m_hash;
     QStringList m_layoutsFiles;
     QString m_configFilePath;
+    int m_contentType;
     const QString m_layoutsDir = "/usr/share/glacier-keyboard/layouts";
     MGConfItem m_enabledLayoutConfigItem;
     MGConfItem m_lastKeyboardLayout;
+    QJsonObject m_keyboardlayout;
 };
 
 #endif // KEYBOARDSLAYOUTMODEL_H

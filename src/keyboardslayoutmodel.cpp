@@ -28,6 +28,7 @@
 KeyboardsLayoutModel::KeyboardsLayoutModel(QObject *parent) :
     m_enabledLayoutConfigItem("/home/glacier/keyboard/enabledLayouts")
   , m_lastKeyboardLayout("/home/glacier/keyboard/lastKeyboard")
+  , m_contentType(0)
 {
     QDirIterator it(m_layoutsDir, QStringList() << "*.json" , QDir::Files);
     while (it.hasNext()) {
@@ -77,14 +78,16 @@ QVariant KeyboardsLayoutModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
-    QJsonObject layout = QJsonDocument::fromJson(val.toUtf8()).object();
+    qDebug() << QJsonDocument::fromJson(val.toUtf8()).object().value("name").toString();
+
+    QJsonObject layout = getContentTypeLayout(val.toUtf8());
 
     if(role == Qt::UserRole) {
-        return layout.value("code").toString();
+        return QJsonDocument::fromJson(val.toUtf8()).object().value("code").toString();
     } else if (role == Qt::UserRole + 1) {
-        return layout.value("name").toString();
+        return QJsonDocument::fromJson(val.toUtf8()).object().value("name").toString();
     } else if (role == Qt::UserRole + 2) {
-        return layout.value("local_name").toString();
+        return QJsonDocument::fromJson(val.toUtf8()).object().value("local_name").toString();
     } else if (role == Qt::UserRole + 3) {
         return layout.value("row1").toString();
     } else if (role == Qt::UserRole + 4) {
@@ -144,6 +147,47 @@ void KeyboardsLayoutModel::setLastKeyboardLayout(QString code)
     }
 }
 
+void KeyboardsLayoutModel::setContentType(int type)
+{
+    if(m_contentType == type) {
+        return;
+    }
+
+    m_contentType = type;
+    beginResetModel();
+    emit contentTypeChanged();
+    endResetModel();
+}
+
+QJsonObject KeyboardsLayoutModel::getContentTypeLayout(QString jsonString) const
+{
+    QJsonObject keyboardlayout;
+    QString layoutObject = "base";
+    if(m_contentType == 3) {
+        layoutObject = "email";
+    }
+
+    if(m_contentType == 4) {
+        layoutObject = "url";
+    }
+//numbers json
+    if(m_contentType == 1) {
+        jsonString = "";
+    }
+//telephone json
+    if(m_contentType == 2) {
+        jsonString = "";
+    }
+
+    keyboardlayout = QJsonDocument::fromJson(jsonString.toUtf8()).object().value(layoutObject).toObject();
+    if(keyboardlayout.isEmpty()) {
+        keyboardlayout = QJsonDocument::fromJson(jsonString.toUtf8()).object().value("base").toObject();
+    }
+    keyboardlayout.insert("local_name", QJsonDocument::fromJson(jsonString.toUtf8()).object().value("name"));
+
+    return keyboardlayout;
+}
+
 QJsonObject KeyboardsLayoutModel::getKeyboardByCode(QString code)
 {
     QJsonObject keyboard;
@@ -151,7 +195,7 @@ QJsonObject KeyboardsLayoutModel::getKeyboardByCode(QString code)
     if(keyboardLayoutFile.exists()) {
         keyboardLayoutFile.open(QIODevice::ReadOnly | QIODevice::Text);
         QString layout = keyboardLayoutFile.readAll();
-        keyboard = QJsonDocument::fromJson(layout.toUtf8()).object();
+        keyboard = getContentTypeLayout(layout);
     }
 
     return keyboard;

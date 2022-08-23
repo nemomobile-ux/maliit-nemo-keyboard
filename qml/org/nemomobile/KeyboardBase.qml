@@ -44,6 +44,9 @@ Item {
 
     KeyboardsLayoutModel{
         id: keyboardModel
+        Component.onCompleted: {
+             console.log(keyboardModel.getKeyboardByCode(lastKeyboardLayout))
+        }
     }
 
     property Item layout
@@ -60,7 +63,7 @@ Item {
     property bool closeSwipeActive
     property int closeSwipeThreshold: height*.3
 
-    property string name: keyboardModel.getKeyboardByCode(lastKeyboardLayout)["name"]
+    property string name: keyboardModel.getKeyboardByCode(lastKeyboardLayout)["local_name"]
     property variant row1: keyboardModel.getKeyboardByCode(lastKeyboardLayout)["row1"]
     property variant row2: keyboardModel.getKeyboardByCode(lastKeyboardLayout)["row2"]
     property variant row3: keyboardModel.getKeyboardByCode(lastKeyboardLayout)["row3"]
