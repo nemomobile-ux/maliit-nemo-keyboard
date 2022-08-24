@@ -75,6 +75,7 @@ Column {
                 captionShifted: row1[index][0].toUpperCase()
                 symView: row1[index][1]
                 symView2: row1[index][2]
+                accents: accents_row1[index]
             }
         }
     } //end Row1
@@ -89,6 +90,7 @@ Column {
                 captionShifted: row2[index][0].toUpperCase()
                 symView: row2[index][1]
                 symView2: row2[index][2]
+                accents: accents_row2[index]
             }
         }
     } //end Row2
@@ -113,6 +115,7 @@ Column {
                 captionShifted: row3[index][0].toUpperCase()
                 symView: row3[index][1]
                 symView2: row3[index][2]
+                accents: accents_row3[index]
             }
         }
 

@@ -40,6 +40,7 @@ KeyBase  {
     property string captionShifted
     property string symView
     property string symView2
+    property string accents
     property alias text: key_label.text
     key: Qt.Key_Multi_key
 
@@ -64,6 +65,78 @@ KeyBase  {
         color:Theme.textColor
         text: (inSymView && symView.length) > 0 ? (inSymView2 ? symView2 : symView)
                                                 : (isShifted ? captionShifted : caption)
+    }
+
+    Connections{
+        target: MInputMethodQuick
+        function onActiveChanged() {
+            showMore.visible = false
+        }
+    }
+
+    function showMeMore() {
+        if(accents != "") {
+            showMore.visible = true
+        }
+    }
+
+    onAccentsChanged: {
+        for(var i=0; i < accents.length; i++) {
+            accentsListModel.append({ "keyData" : accents[i] })
+        }
+    }
+
+    Rectangle {
+        id: showMore
+        height: aCharKey.height
+        width: aCharKey.height * accents.length
+        color: Theme.accentColor
+        visible: false
+
+        anchors{
+            horizontalCenter: parent.horizontalCenter
+            bottom: parent.top
+        }
+
+        onVisibleChanged: {
+            if(x < 0) {
+                x = 0
+            }
+        }
+
+        InverseMouseArea{
+            id: closeShowMore
+            anchors.fill: parent
+            onPressed: showMore.visible = false
+        }
+
+        ListModel{
+            id: accentsListModel
+        }
+
+        Row {
+            Repeater{
+                model: accentsListModel
+                delegate: Text{
+                    width: aCharKey.height
+                    height: aCharKey.height
+                    text: keyData
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    font.family: Theme.fontFamily
+                    font.pixelSize: aCharKey.height*0.5
+                    font.bold: true
+                    color:Theme.textColor
+                    MouseArea{
+                        anchors.fill: parent
+                        onClicked: {
+                            MInputMethodQuick.sendCommit(keyData)
+                            showMore.visible = false
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 

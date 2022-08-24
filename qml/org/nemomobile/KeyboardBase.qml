@@ -101,6 +101,7 @@ Item {
         z: 10
         target: lastPressedKey
     }
+
     Timer {
         id: pressTimer
         interval: 500
@@ -474,6 +475,7 @@ Item {
     }
 
     function changeCurrentKeyboard() {
+        inputHandler.hideMore()
         if(availableKeyboards.length == 1) {
             lastKeyboardLayout = availableKeyboards[0]
         }

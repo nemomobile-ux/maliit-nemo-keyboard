@@ -2,6 +2,7 @@
 **
 ** Copyright (C) 2013 Jolla Ltd.
 ** Contact: Pekka Vuorela <pekka.vuorela@jollamobile.com>
+** Copyright (C) 2022 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
 ** All rights reserved.
 **
 ** This file is part of Maliit plugins
@@ -52,11 +53,25 @@ Item {
         }
     }
 
+    Timer{
+        id: extendedKeyTimer
+        repeat: false
+        interval: 800
+        onTriggered: {
+            pressedKey.showMeMore()
+        }
+    }
+
     function _handleKeyPress(key) {
         pressedKey = key
 
         if (handleKeyPress())
             return
+
+        if(pressedKey.symView != "" || pressedKey.symView2 != "") {
+            console.log("Have extended keys")
+            extendedKeyTimer.start()
+        }
 
         if (pressedKey.repeat) {
             autorepeatTimer.interval = 800
@@ -66,11 +81,11 @@ Item {
 
     function _handleKeyRelease() {
         pressedKey = null
-
         if (handleKeyRelease())
             return
 
         autorepeatTimer.stop()
+        extendedKeyTimer.stop()
     }
 
     function _handleKeyClick() {
@@ -105,6 +120,7 @@ Item {
 
     function _reset() {
         autorepeatTimer.stop()
+        extendedKeyTimer.stop()
         reset()
     }
 

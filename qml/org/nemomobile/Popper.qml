@@ -31,9 +31,8 @@ import QtQuick 2.6
 import QtQuick.Controls.Styles.Nemo 1.0
 
 
-Image {
+Item {
     id: popper
-    source: "popper.png"
 
     width: target ? target.width*1.2 : 0
     height: target ? target.height*1.2 : 0
@@ -41,6 +40,11 @@ Image {
     visible: target ? true : false
     anchors.bottomMargin: Theme.itemSpacingExtraSmall
     property Item target: null
+
+    Rectangle{
+        anchors.fill: parent
+        color: Theme.accentColor
+    }
 
     Text {
         id: popperText
