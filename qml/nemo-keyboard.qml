@@ -2,7 +2,7 @@
  * This file is part of Maliit plugins
  *
  * Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies). All rights reserved.
- * Copyright (C) 2021 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2021-2022 Chupligin Sergey <neochapay@gmail.com>
  *
  * Contact: Mohammad Anwari <Mohammad.Anwari@nokia.com>
  *
@@ -112,14 +112,23 @@ Item {
                     y = -height
             }
 
+            Component.onCompleted: {
+                keyboard.setKeyboardLayout()
+            }
+
             KeyboardLandscape {
                 id: vkb_landscape
-                visible: keyboard.layout == vkb_landscape
+                visible: keyboard.layout == vkb_landscape && !keyboard.specialKeyboard
             }
 
             KeyboardPortrait {
                 id: vkb_portrait
-                visible: keyboard.layout == vkb_portrait
+                visible: keyboard.layout == vkb_portrait && !keyboard.specialKeyboard
+            }
+
+            KeyboardDigits{
+                id: vkb_digits
+                visible: MInputMethodQuick.contentType == 1 || MInputMethodQuick.contentType == 2
             }
 
             Connections {
@@ -131,6 +140,23 @@ Item {
                     } else {
                         showAnimation.stop()
                         hideAnimation.start()
+                    }
+                }
+                function onContentTypeChanged() {
+                    keyboard.setKeyboardLayout()
+                }
+            }
+
+            function setKeyboardLayout() {
+                if(MInputMethodQuick.contentType == 1 || MInputMethodQuick.contentType == 2) {
+                    //Digits and Phone
+                    keyboard.layout = vkb_digits
+                } else {
+                    //Other
+                    if(root.landscape) {
+                        keyboard.layout = vkb_landscape
+                    } else {
+                        keyboard.layout = vkb_portrait
                     }
                 }
             }

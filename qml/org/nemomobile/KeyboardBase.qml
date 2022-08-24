@@ -44,8 +44,19 @@ Item {
 
     KeyboardsLayoutModel{
         id: keyboardModel
-        Component.onCompleted: {
-             console.log(keyboardModel.getKeyboardByCode(lastKeyboardLayout))
+    }
+
+    Connections{
+        target: MInputMethodQuick
+        function onContentTypeChanged() {
+            keyboardModel.contentType = MInputMethodQuick.contentType
+            keyboard.row1 = keyboardModel.getKeyboardByCode(lastKeyboardLayout)["row1"]
+            keyboard.row2 = keyboardModel.getKeyboardByCode(lastKeyboardLayout)["row2"]
+            keyboard.row3 = keyboardModel.getKeyboardByCode(lastKeyboardLayout)["row3"]
+
+            keyboard.accents_row1 = keyboardModel.getKeyboardByCode(lastKeyboardLayout)["accents_row1"]
+            keyboard.accents_row2 = keyboardModel.getKeyboardByCode(lastKeyboardLayout)["accents_row2"]
+            keyboard.accents_row3 = keyboardModel.getKeyboardByCode(lastKeyboardLayout)["accents_row3"]
         }
     }
 
@@ -106,6 +117,7 @@ Item {
         z: 100
         color: Theme.accentColor
         Drag.active: mouseArea.drag.active
+        visible: MInputMethodQuick.contentType != 1 && MInputMethodQuick.contentType != 2
         Timer {
             id: movetimer
             interval: 200

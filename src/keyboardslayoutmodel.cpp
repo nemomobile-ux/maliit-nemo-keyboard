@@ -170,17 +170,10 @@ QJsonObject KeyboardsLayoutModel::getContentTypeLayout(QString jsonString) const
     if(m_contentType == 4) {
         layoutObject = "url";
     }
-//numbers json
-    if(m_contentType == 1) {
-        jsonString = "";
-    }
-//telephone json
-    if(m_contentType == 2) {
-        jsonString = "";
-    }
 
     keyboardlayout = QJsonDocument::fromJson(jsonString.toUtf8()).object().value(layoutObject).toObject();
     if(keyboardlayout.isEmpty()) {
+        qWarning() << "layout" << layoutObject << "is empty. Use base layout";
         keyboardlayout = QJsonDocument::fromJson(jsonString.toUtf8()).object().value("base").toObject();
     }
     keyboardlayout.insert("local_name", QJsonDocument::fromJson(jsonString.toUtf8()).object().value("name"));
