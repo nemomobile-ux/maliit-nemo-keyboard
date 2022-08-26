@@ -92,12 +92,6 @@ Item {
         y: MInputMethodQuick.appOrientation == 0 || MInputMethodQuick.appOrientation == 270
            ? parent.height : 0
 
-        Rectangle{
-            id: keyboardBack
-            anchors.fill: keyboard
-            color: Theme.backgroundColor
-        }
-
         KeyboardBase {
             id: keyboard
             layout: root.landscape ? vkb_landscape : vkb_portrait

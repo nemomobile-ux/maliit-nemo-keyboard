@@ -23,6 +23,7 @@
 #include <QQmlExtensionPlugin>
 
 #include "keyboardslayoutmodel.h"
+#include "predictormodel.h"
 
 class Q_DECL_EXPORT GlacierPackageManagerPlugin : public QQmlExtensionPlugin
 {
@@ -41,6 +42,7 @@ public:
     {
         Q_ASSERT(uri == QLatin1String("org.glacier.keyboard"));
         qmlRegisterType<KeyboardsLayoutModel>(uri, 1, 0, "KeyboardsLayoutModel");
+        qmlRegisterType<PredictorModel>(uri, 1, 0, "PredictorModel");
     }
 };
 

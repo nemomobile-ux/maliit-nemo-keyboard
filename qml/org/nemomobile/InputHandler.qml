@@ -35,9 +35,11 @@
 
 import QtQuick 2.6
 import com.meego.maliitquick 1.0
+import org.glacier.keyboard 1.0
 
 Item {
     property Item pressedKey
+    property string preedit
 
     Timer {
         id: autorepeatTimer
@@ -69,13 +71,24 @@ Item {
             return
 
         if(pressedKey.symView != "" || pressedKey.symView2 != "") {
-            console.log("Have extended keys")
             extendedKeyTimer.start()
         }
 
         if (pressedKey.repeat) {
             autorepeatTimer.interval = 800
             autorepeatTimer.start()
+        }
+
+        if(pressedKey.key === Qt.Key_Space) {
+            preedit = ""
+        } else if(pressedKey.key === Qt.Key_Return) {
+            if (preedit !== "") {
+                //On enther accept word in spellchecker
+            }
+        } else if (pressedKey.key === Qt.Key_Backspace && preedit !== "") {
+            preedit = preedit.substr(0, preedit.length-1)
+        } else {
+            preedit += pressedKey.text
         }
     }
 

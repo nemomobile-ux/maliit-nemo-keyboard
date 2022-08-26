@@ -10,6 +10,7 @@ FunctionKey 1.0 FunctionKey.qml
 BackspaceKey 1.0 BackspaceKey.qml
 EnterKey 1.0 EnterKey.qml
 ShiftKey 1.0 ShiftKey.qml
+SpellChecker 1.0 SpellChecker.qml
 SymbolKey 1.0 SymbolKey.qml
 DigitKey 1.0 DigitKey.qml
 PluginClose  1.0 PluginClose.qml

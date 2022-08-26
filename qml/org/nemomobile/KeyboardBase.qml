@@ -50,13 +50,7 @@ Item {
         target: MInputMethodQuick
         function onContentTypeChanged() {
             keyboardModel.contentType = MInputMethodQuick.contentType
-            keyboard.row1 = keyboardModel.getKeyboardByCode(lastKeyboardLayout)["row1"]
-            keyboard.row2 = keyboardModel.getKeyboardByCode(lastKeyboardLayout)["row2"]
-            keyboard.row3 = keyboardModel.getKeyboardByCode(lastKeyboardLayout)["row3"]
-
-            keyboard.accents_row1 = keyboardModel.getKeyboardByCode(lastKeyboardLayout)["accents_row1"]
-            keyboard.accents_row2 = keyboardModel.getKeyboardByCode(lastKeyboardLayout)["accents_row2"]
-            keyboard.accents_row3 = keyboardModel.getKeyboardByCode(lastKeyboardLayout)["accents_row3"]
+            keyboard.keyboardLayout = keyboardModel.getKeyboardByCode(lastKeyboardLayout)
         }
     }
 
@@ -74,26 +68,20 @@ Item {
     property bool closeSwipeActive
     property int closeSwipeThreshold: height*.3
 
-    property string name: keyboardModel.getKeyboardByCode(lastKeyboardLayout)["local_name"]
-    property variant row1: keyboardModel.getKeyboardByCode(lastKeyboardLayout)["row1"]
-    property variant row2: keyboardModel.getKeyboardByCode(lastKeyboardLayout)["row2"]
-    property variant row3: keyboardModel.getKeyboardByCode(lastKeyboardLayout)["row3"]
-    property variant accents_row1: keyboardModel.getKeyboardByCode(lastKeyboardLayout)["accents_row1"]
-    property variant accents_row2: keyboardModel.getKeyboardByCode(lastKeyboardLayout)["accents_row2"]
-    property variant accents_row3: keyboardModel.getKeyboardByCode(lastKeyboardLayout)["accents_row3"]
-
+    property variant keyboardLayout: keyboardModel.getKeyboardByCode(lastKeyboardLayout)
     property variant enabledKeyboards: keyboardModel.enabledKeyboards
     property alias lastKeyboardLayout: keyboardModel.lastKeyboardLayout
 
-    height: layout ? layout.height : 0
+    height: layout ? keysArea.height + spellChecker.height : 0
     onPortraitModeChanged: cancelAllTouchPoints()
-    onLayoutChanged: if (layout) layout.parent = keyboard
+    onLayoutChanged: if (layout) layout.parent = keysArea
     // if height changed while touch point was being held
     // we can't rely on point values anymore
     onHeightChanged: closeSwipeActive = false
 
     InputHandler {
         id: inputHandler
+        onPreeditChanged: spellchecker.check(preedit)
     }
 
     Popper {
@@ -107,112 +95,143 @@ Item {
         interval: 500
     }
 
-    Rectangle {
-        id: tracker
-        width: Theme.itemWidthExtraSmall/2
-        height: width
-        radius: width
-        border.width: width/12
-        x:parent.width/2-tracker.width/2
-        y:parent.height/2-tracker.height/2
-        z: 100
-        color: Theme.accentColor
-        Drag.active: mouseArea.drag.active
-        visible: MInputMethodQuick.contentType != 1 && MInputMethodQuick.contentType != 2
-        Timer {
-            id: movetimer
-            interval: 200
-            repeat: true
-            property int key
-            onTriggered: {
-                MInputMethodQuick.sendKey(key)
-            }
-        }
-
-        MouseArea {
-            id:mouseArea
-            width: parent.width*1.5
-            height: width
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            property int _startlX: keyboard.width/2 - parent.width/2
-            property int _startlY: keyboard.height/2 - parent.width/2
-            property bool moved
-            drag.target: tracker
-            drag.axis: Drag.XAndYAxis
-            drag {
-                maximumX: _startlX+tracker.width
-                minimumX: _startlX-tracker.width
-                minimumY: _startlY-tracker.width
-                maximumY: _startlY+tracker.width
-            }
-            drag.onActiveChanged: {
-                if(!drag.active)
-                {
-                    movetimer.stop()
-                    movetimer.key = -1
-                }
-            }
-            onPositionChanged: {
-                moved=true
-                if(Math.abs(tracker.x - mouseArea._startlX)>=Math.abs(tracker.y - mouseArea._startlY)){
-                    if (tracker.x < mouseArea._startlX) {
-                        movetimer.key = Qt.Key_Left
-                        movetimer.start()
-                    }else if (tracker.x > mouseArea._startlX) {
-                        movetimer.key = Qt.Key_Right
-                        movetimer.start()
-                    }
-                }else if (tracker.y < mouseArea._startlY) {
-                    movetimer.key = Qt.Key_Up
-                    movetimer.start()
-                }else if (tracker.y > mouseArea._startlY) {
-                    movetimer.key = Qt.Key_Down
-                    movetimer.start()
-                }
-            }
-            onReleased: {
-                if(!moved) {
-                    keyboard.handlePressed(keyboard.createPointArray((tracker.x + mouse.x), tracker.y + mouse.y))
-                    keyboard.handleReleased(keyboard.createPointArray((tracker.x + mouse.x), tracker.y + mouse.y))
-                }
-                moved=false
-            }
-
-            states: [
-                State {
-                    name: "default"
-                    when: !mouseArea.drag.active
-                }
-            ]
-
-            transitions: [
-                Transition {
-                    to: "default"
-                    NumberAnimation {
-                        target: tracker
-                        properties: "x"
-                        to: mouseArea._startlX
-                        duration: 100
-                    }
-                    NumberAnimation {
-                        target: tracker
-                        properties: "y"
-                        to: mouseArea._startlY
-                        duration: 100
-                    }
-                }
-            ]
-        }
+    SpellChecker{
+        id: spellchecker
+        width: parent.width
+        height: parent.height/5
+        limit: 3
+        language: keyboardLayout["code"]
     }
 
-    BorderImage {
-        width: parent.width;
-        height: parent.height
-        border { left: 1; top: 4; right: 1; bottom:0 }
-        horizontalTileMode: BorderImage.Repeat
-        verticalTileMode: BorderImage.Repeat
-        source: "vkb-body.png"
+    Rectangle{
+        id: keyboardBack
+        anchors.fill: keysArea
+        color: Theme.backgroundColor
+    }
+
+    Item{
+        id: keysArea
+        width: parent.width
+        height: parent.height/5*4
+
+        anchors.top: spellchecker.bottom
+
+        Rectangle {
+            id: tracker
+            width: Theme.itemWidthExtraSmall/2
+            height: width
+            radius: width
+            border.width: width/12
+            x:keysArea.width/2-tracker.width/2
+            y:keysArea.height/2-tracker.height/2
+            z: 100
+            color: Theme.accentColor
+            Drag.active: mouseArea.drag.active
+            visible: MInputMethodQuick.contentType != 1 && MInputMethodQuick.contentType != 2
+            Timer {
+                id: movetimer
+                interval: 200
+                repeat: true
+                property int key
+                onTriggered: {
+                    MInputMethodQuick.sendKey(key)
+                }
+            }
+
+            MouseArea {
+                id:mouseArea
+                width: parent.width*1.5
+                height: width
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                property int _startlX: keysArea.width/2 - parent.width/2
+                property int _startlY: keysArea.height/2 - parent.width/2
+                property bool moved
+                drag.target: tracker
+                drag.axis: Drag.XAndYAxis
+                drag {
+                    maximumX: _startlX+tracker.width
+                    minimumX: _startlX-tracker.width
+                    minimumY: _startlY-tracker.width
+                    maximumY: _startlY+tracker.width
+                }
+                drag.onActiveChanged: {
+                    if(!drag.active)
+                    {
+                        movetimer.stop()
+                        movetimer.key = -1
+                    }
+                }
+                onPositionChanged: {
+                    moved=true
+                    if(Math.abs(tracker.x - mouseArea._startlX)>=Math.abs(tracker.y - mouseArea._startlY)){
+                        if (tracker.x < mouseArea._startlX) {
+                            movetimer.key = Qt.Key_Left
+                            movetimer.start()
+                        }else if (tracker.x > mouseArea._startlX) {
+                            movetimer.key = Qt.Key_Right
+                            movetimer.start()
+                        }
+                    }else if (tracker.y < mouseArea._startlY) {
+                        movetimer.key = Qt.Key_Up
+                        movetimer.start()
+                    }else if (tracker.y > mouseArea._startlY) {
+                        movetimer.key = Qt.Key_Down
+                        movetimer.start()
+                    }
+                }
+                onReleased: {
+                    if(!moved) {
+                        keyboard.handlePressed(keyboard.createPointArray((tracker.x + mouse.x), tracker.y + mouse.y))
+                        keyboard.handleReleased(keyboard.createPointArray((tracker.x + mouse.x), tracker.y + mouse.y))
+                    }
+                    moved=false
+                }
+
+                states: [
+                    State {
+                        name: "default"
+                        when: !mouseArea.drag.active
+                    }
+                ]
+
+                transitions: [
+                    Transition {
+                        to: "default"
+                        NumberAnimation {
+                            target: tracker
+                            properties: "x"
+                            to: mouseArea._startlX
+                            duration: 100
+                        }
+                        NumberAnimation {
+                            target: tracker
+                            properties: "y"
+                            to: mouseArea._startlY
+                            duration: 100
+                        }
+                    }
+                ]
+            }
+        }
+        MouseArea {
+            enabled: false
+            anchors.fill: parent
+
+            onPressed: keyboard.handlePressed(keyboard.createPointArray(mouse.x, mouse.y))
+            onPositionChanged: keyboard.handleUpdated(keyboard.createPointArray(mouse.x, mouse.y))
+            onReleased: keyboard.handleReleased(keyboard.createPointArray(mouse.x, mouse.y))
+            onCanceled: keyboard.cancelAllTouchPoints()
+        }
+
+        MultiPointTouchArea {
+            anchors.fill: parent
+
+            onPressed: keyboard.handlePressed(touchPoints)
+            onUpdated: keyboard.handleUpdated(touchPoints)
+            onReleased: keyboard.handleReleased(touchPoints)
+            onCanceled: keyboard.handleCanceled(touchPoints)
+        }
     }
 
     Connections {
@@ -224,26 +243,6 @@ Item {
         function onInputMethodReset() {
             inputHandler._reset()
         }
-    }
-
-
-    MouseArea {
-        enabled: false
-        anchors.fill: parent
-
-        onPressed: keyboard.handlePressed(keyboard.createPointArray(mouse.x, mouse.y))
-        onPositionChanged: keyboard.handleUpdated(keyboard.createPointArray(mouse.x, mouse.y))
-        onReleased: keyboard.handleReleased(keyboard.createPointArray(mouse.x, mouse.y))
-        onCanceled: keyboard.cancelAllTouchPoints()
-    }
-
-    MultiPointTouchArea {
-        anchors.fill: parent
-
-        onPressed: keyboard.handlePressed(touchPoints)
-        onUpdated: keyboard.handleUpdated(touchPoints)
-        onReleased: keyboard.handleReleased(touchPoints)
-        onCanceled: keyboard.handleCanceled(touchPoints)
     }
 
     function createPointArray(pointX, pointY) {

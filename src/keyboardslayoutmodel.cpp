@@ -176,7 +176,10 @@ QJsonObject KeyboardsLayoutModel::getContentTypeLayout(QString jsonString) const
         qWarning() << "layout" << layoutObject << "is empty. Use base layout";
         keyboardlayout = QJsonDocument::fromJson(jsonString.toUtf8()).object().value("base").toObject();
     }
-    keyboardlayout.insert("local_name", QJsonDocument::fromJson(jsonString.toUtf8()).object().value("name"));
+    keyboardlayout.insert("code", QJsonDocument::fromJson(jsonString.toUtf8()).object().value("code"));
+    keyboardlayout.insert("name", QJsonDocument::fromJson(jsonString.toUtf8()).object().value("name"));
+    keyboardlayout.insert("local_name", QJsonDocument::fromJson(jsonString.toUtf8()).object().value("local_name"));
+
 
     return keyboardlayout;
 }

@@ -42,15 +42,8 @@ Column {
     property bool inSymView
     property bool inSymView2
 
-    property string name: parent.name
-    property variant row1: parent.row1
-    property variant row2: parent.row2
-    property variant row3: parent.row3
-    property variant accents_row1: parent.accents_row1
-    property variant accents_row2: parent.accents_row2
-    property variant accents_row3: parent.accents_row3
-
-    property var enabledKeyboards: parent.enabledKeyboards
+    property variant keyboardLayout: keyboard.keyboardLayout
+    property var enabledKeyboards: keyboard.enabledKeyboards
 
     property int topPadding: Theme.itemSpacingExtraSmall
     property int bottomPadding: topPadding
@@ -58,24 +51,24 @@ Column {
     property int rightPadding: leftPadding
     property int keyHeight: keyArea.height / 4
 
-    property int totalCharButtons: Math.max(row1.length, row2.length, row3.length)
+    property int totalCharButtons: Math.max(keyboardLayout["row1"].length, keyboardLayout["row2"].length, keyboardLayout["row3"].length)
     property int keyWidth: (keyArea.width-leftPadding*(totalCharButtons+1))/totalCharButtons
 
     function changeCurrentKeyboard() {
-        parent.changeCurrentKeyboard()
+        keyboard.changeCurrentKeyboard()
     }
 
     Row { //Row 1
         anchors.horizontalCenter: parent.horizontalCenter
 
         Repeater {
-            model: row1
+            model: keyboardLayout["row1"]
             LandscapeCharacterKey {
-                caption: row1[index][0]
-                captionShifted: row1[index][0].toUpperCase()
-                symView: row1[index][1]
-                symView2: row1[index][2]
-                accents: accents_row1[index]
+                caption: keyboardLayout["row1"][index][0]
+                captionShifted: keyboardLayout["row1"][index][0].toUpperCase()
+                symView: keyboardLayout["row1"][index][1]
+                symView2: keyboardLayout["row1"][index][2]
+                accents: keyboardLayout["accents_row1"][index]
             }
         }
     } //end Row1
@@ -84,13 +77,13 @@ Column {
         anchors.horizontalCenter: parent.horizontalCenter
 
         Repeater {
-            model: row2
+            model: keyboardLayout["row2"]
             LandscapeCharacterKey {
-                caption: row2[index][0]
-                captionShifted: row2[index][0].toUpperCase()
-                symView: row2[index][1]
-                symView2: row2[index][2]
-                accents: accents_row2[index]
+                caption: keyboardLayout["row2"][index][0]
+                captionShifted: keyboardLayout["row2"][index][0].toUpperCase()
+                symView: keyboardLayout["row2"][index][1]
+                symView2: keyboardLayout["row2"][index][2]
+                accents: keyboardLayout["accents_row2"][index]
             }
         }
     } //end Row2
@@ -109,13 +102,13 @@ Column {
         }
 
         Repeater {
-            model: row3
+            model: keyboardLayout["row3"]
             LandscapeCharacterKey {
-                caption: row3[index][0]
-                captionShifted: row3[index][0].toUpperCase()
-                symView: row3[index][1]
-                symView2: row3[index][2]
-                accents: accents_row3[index]
+                caption: keyboardLayout["row3"][index][0]
+                captionShifted: keyboardLayout["row3"][index][0].toUpperCase()
+                symView: keyboardLayout["row3"][index][1]
+                symView2: keyboardLayout["row3"][index][2]
+                accents: keyboardLayout["accents_row3"][index]
             }
         }
 
@@ -161,8 +154,8 @@ Column {
         }
         LandscapeCharacterKey {
             width: (enabledKeyboards.length > 1) ? keyArea.width/2 : keyArea.width/2+(keyArea.width/10)
-            caption: keyArea.name
-            captionShifted: keyArea.name
+            caption: keyboardLayout["local_name"]
+            captionShifted: keyboardLayout["local_name"]
             key: Qt.Key_Space
             showPopper: false
         }
