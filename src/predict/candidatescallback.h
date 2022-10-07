@@ -4,8 +4,7 @@
 #include <presage.h>
 
 class CandidatesCallback
-    : public PresageCallback
-{
+    : public PresageCallback {
 private:
     const std::string& m_past_context;
     const std::string m_empty;

@@ -19,7 +19,6 @@
 
 #include "keyboardsettingsplugin.h"
 
-KeyboardSettingsPlugin::KeyboardSettingsPlugin(QObject *parent)
+KeyboardSettingsPlugin::KeyboardSettingsPlugin(QObject* parent)
 {
-
 }

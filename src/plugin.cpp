@@ -17,28 +17,27 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include <QtQml>
-#include <QtGlobal>
 #include <QQmlEngine>
 #include <QQmlExtensionPlugin>
+#include <QtGlobal>
+#include <QtQml>
 
 #include "keyboardslayoutmodel.h"
 #include "predictormodel.h"
 
-class Q_DECL_EXPORT GlacierPackageManagerPlugin : public QQmlExtensionPlugin
-{
+class Q_DECL_EXPORT GlacierPackageManagerPlugin : public QQmlExtensionPlugin {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "org.glacier.keyboard")
 public:
     virtual ~GlacierPackageManagerPlugin() { }
 
-    void initializeEngine(QQmlEngine *, const char *uri)
+    void initializeEngine(QQmlEngine*, const char* uri)
     {
         Q_ASSERT(uri == QLatin1String("org.glacier.keyboard"));
         qmlRegisterModule(uri, 1, 0);
     }
 
-    void registerTypes(const char *uri)
+    void registerTypes(const char* uri)
     {
         Q_ASSERT(uri == QLatin1String("org.glacier.keyboard"));
         qmlRegisterType<KeyboardsLayoutModel>(uri, 1, 0, "KeyboardsLayoutModel");
