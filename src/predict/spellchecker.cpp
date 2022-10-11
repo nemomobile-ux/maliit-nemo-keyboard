@@ -33,34 +33,32 @@
 #include "spellchecker.h"
 #include "hunspell/hunspell.hxx"
 
-#include <QFile>
-#include <QTextStream>
-#include <QTextCodec>
-#include <QStringList>
 #include <QDebug>
 #include <QDir>
+#include <QFile>
+#include <QStringList>
+#include <QTextCodec>
+#include <QTextStream>
 
 //! \class SpellChecker
 //! Checks spelling and suggest words. Currently Spellchecker is
 //! implemented by using Hunspell.
 
-struct SpellCheckerPrivate
-{
-    Hunspell *hunspell; //!< The spellchecker backend, Hunspell.
-    QTextCodec *codec; //!< Which codec to use.
+struct SpellCheckerPrivate {
+    Hunspell* hunspell; //!< The spellchecker backend, Hunspell.
+    QTextCodec* codec; //!< Which codec to use.
     QSet<QString> ignored_words; //!< The words to ignore.
     QString user_dictionary_file;
     QString aff_file;
     QString dic_file;
 
-    SpellCheckerPrivate(const QString &user_dictionary);
+    SpellCheckerPrivate(const QString& user_dictionary);
     ~SpellCheckerPrivate();
-    void addUserDictionary(const QString &user_dictionary);
+    void addUserDictionary(const QString& user_dictionary);
     void clear();
 };
 
-
-SpellCheckerPrivate::SpellCheckerPrivate(const QString &user_dictionary)
+SpellCheckerPrivate::SpellCheckerPrivate(const QString& user_dictionary)
     // XXX: toUtf8? toLatin1? toAscii? toLocal8Bit?
     : hunspell(nullptr)
     , codec(nullptr)
@@ -78,7 +76,7 @@ SpellCheckerPrivate::~SpellCheckerPrivate()
 
 //! \brief SpellCheckerPrivate::addUserDictionary adds the users custom words to the dictionary
 //! \param user_dictionary filename of the user's dictionary
-void SpellCheckerPrivate::addUserDictionary(const QString &user_dictionary)
+void SpellCheckerPrivate::addUserDictionary(const QString& user_dictionary)
 {
     if (not hunspell)
         return;
@@ -98,7 +96,7 @@ void SpellCheckerPrivate::addUserDictionary(const QString &user_dictionary)
 //! everything for a new language
 void SpellCheckerPrivate::clear()
 {
-    delete(hunspell);
+    delete (hunspell);
     hunspell = nullptr;
     aff_file.clear();
     dic_file.clear();
@@ -124,7 +122,7 @@ bool SpellChecker::setEnabled(bool on)
     if (enabled() == on)
         return true;
 
-    delete(d->hunspell);
+    delete (d->hunspell);
     d->hunspell = nullptr;
 
     if (not on) {
@@ -137,11 +135,11 @@ bool SpellChecker::setEnabled(bool on)
     }
 
     d->hunspell = new Hunspell(d->aff_file.toUtf8().constData(),
-                               d->dic_file.toUtf8().constData());
+        d->dic_file.toUtf8().constData());
 
     d->codec = QTextCodec::codecForName(d->hunspell->get_dic_encoding());
     if (not d->codec) {
-        qWarning () << Q_FUNC_INFO << ":Could not find codec for" << d->hunspell->get_dic_encoding() << "- turning off spellchecking";
+        qWarning() << Q_FUNC_INFO << ":Could not find codec for" << d->hunspell->get_dic_encoding() << "- turning off spellchecking";
         d->clear();
         return false;
     }
@@ -151,10 +149,10 @@ bool SpellChecker::setEnabled(bool on)
 }
 
 //! \param user_dictionary The file path to the user's own dictionary.
-SpellChecker::SpellChecker(const QString &user_dictionary)
+SpellChecker::SpellChecker(const QString& user_dictionary)
     : d_ptr(new SpellCheckerPrivate(user_dictionary))
-{}
-
+{
+}
 
 //! \brief Checks whether given word is spelled correctly.
 //!
@@ -162,7 +160,7 @@ SpellChecker::SpellChecker(const QString &user_dictionary)
 //! \param word word to check for spelling.
 //! \return \c true if the word has correct spelling (or is ignored),
 //!         otherwise \c false.
-bool SpellChecker::spell(const QString &word)
+bool SpellChecker::spell(const QString& word)
 {
     Q_D(SpellChecker);
 
@@ -173,13 +171,12 @@ bool SpellChecker::spell(const QString &word)
     return d->hunspell->spell(d->codec->fromUnicode(word).toStdString());
 }
 
-
 //! \brief Gives suggestions for a given word.
 //! \param word Base for suggestions.
 //! \param limit Suggestion count limit (-1 for no limits).
 //! \return a list of suggestions.
-QStringList SpellChecker::suggest(const QString &word,
-                                  int limit)
+QStringList SpellChecker::suggest(const QString& word,
+    int limit)
 {
     Q_D(SpellChecker);
 
@@ -204,10 +201,9 @@ QStringList SpellChecker::suggest(const QString &word,
     return result;
 }
 
-
 //! \brief Marks a given word as ignored.
 //! \param word The word to ignore - it will not be checked for spelling.
-void SpellChecker::ignoreWord(const QString &word)
+void SpellChecker::ignoreWord(const QString& word)
 {
     Q_D(SpellChecker);
 
@@ -221,7 +217,7 @@ void SpellChecker::ignoreWord(const QString &word)
 //! \brief Adds a given word to user's permanent dictionary.
 //! \param word The word to be added to user dictionary - it will be used for
 //!             spellchecking and suggesting.
-void SpellChecker::addToUserWordList(const QString &word)
+void SpellChecker::addToUserWordList(const QString& word)
 {
     Q_D(SpellChecker);
 
@@ -241,11 +237,11 @@ void SpellChecker::addToUserWordList(const QString &word)
 
 //! \brief Adds a new word to the current hunspell instance
 //! \param word The word to be added to the current runtime dictionary
-void SpellChecker::updateWord(const QString &word)
+void SpellChecker::updateWord(const QString& word)
 {
     Q_D(SpellChecker);
 
-    if(not enabled()) {
+    if (not enabled()) {
         return;
     }
 
@@ -259,15 +255,15 @@ void SpellChecker::updateWord(const QString &word)
 //! \param language The new language use "en" or "en_US". If more than one
 //! exists, the first one in the directory listing is used
 //! \return true if switching the language succeded
-bool SpellChecker::setLanguage(const QString &language)
+bool SpellChecker::setLanguage(const QString& language)
 {
     Q_D(SpellChecker);
 
     qDebug() << "spellechecker.cpp in setLanguage() lang=" << language << "dictPath=" << dictPath();
 
     QDir dictDir(dictPath());
-    QStringList affMatches = dictDir.entryList(QStringList(language+"*.aff"));
-    QStringList dicMatches = dictDir.entryList(QStringList(language+"*.dic"));
+    QStringList affMatches = dictDir.entryList(QStringList(language + "*.aff"));
+    QStringList dicMatches = dictDir.entryList(QStringList(language + "*.dic"));
 
     if (affMatches.isEmpty() || dicMatches.isEmpty()) {
         QString lang = language;

@@ -1,21 +1,20 @@
 #include "predictormodel.h"
 
-#include <QMutexLocker>
 #include <QDebug>
+#include <QMutexLocker>
 
-PredictorModel::PredictorModel(QObject *parent)
-    : QAbstractListModel{parent}
+PredictorModel::PredictorModel(QObject* parent)
+    : QAbstractListModel { parent }
     , m_limit(3)
 {
-    m_hash.insert(Qt::UserRole ,QByteArray("index"));
-    m_hash.insert(Qt::UserRole+1 ,QByteArray("predictionText"));
+    m_hash.insert(Qt::UserRole, QByteArray("index"));
+    m_hash.insert(Qt::UserRole + 1, QByteArray("predictionText"));
 
     m_spellPredictThread = new QThread();
     m_spellPredictWorker = new SpellPredictWorker();
     m_spellPredictWorker->moveToThread(m_spellPredictThread);
 
     connect(m_spellPredictWorker, &SpellPredictWorker::newSpellingSuggestions, this, &PredictorModel::spellCheckFinishedProcessing);
-
 
     connect(this, &PredictorModel::newSpellCheckWord, m_spellPredictWorker, &SpellPredictWorker::newSpellCheckWord);
     connect(this, &PredictorModel::languageChanged, m_spellPredictWorker, &SpellPredictWorker::setLanguage);
@@ -34,24 +33,24 @@ PredictorModel::~PredictorModel()
     m_spellPredictThread->wait();
 }
 
-QVariant PredictorModel::data(const QModelIndex &index, int role) const
+QVariant PredictorModel::data(const QModelIndex& index, int role) const
 {
-    if (!index.isValid() && index.row() > m_predictedWords.count() ) {
+    if (!index.isValid() && index.row() > m_predictedWords.count()) {
         return QVariant();
     }
 
-    if(role == Qt::UserRole) {
+    if (role == Qt::UserRole) {
         return index.row();
     }
 
-    if(role == Qt::UserRole+1) {
+    if (role == Qt::UserRole + 1) {
         return m_predictedWords.at(index.row());
     }
 
     return QVariant();
 }
 
-int PredictorModel::rowCount(const QModelIndex &parent) const
+int PredictorModel::rowCount(const QModelIndex& parent) const
 {
     Q_UNUSED(parent)
     return m_predictedWords.size();
@@ -64,9 +63,9 @@ void PredictorModel::reload(const QStringList predictedWords)
     endResetModel();
 }
 
-void PredictorModel::setLanguage(const QString &language)
+void PredictorModel::setLanguage(const QString& language)
 {
-    if(language != m_language) {
+    if (language != m_language) {
         m_language = language;
         emit languageChanged(m_language);
     }
@@ -74,7 +73,7 @@ void PredictorModel::setLanguage(const QString &language)
 
 void PredictorModel::setLimit(int limit)
 {
-    if(limit != m_limit) {
+    if (limit != m_limit) {
         m_limit = limit;
         emit limitChanged();
     }
@@ -82,7 +81,7 @@ void PredictorModel::setLimit(int limit)
 
 void PredictorModel::check(QString word)
 {
-    if(m_nextSpellWord != word) {
+    if (m_nextSpellWord != word) {
         m_nextSpellWord = word;
         emit checkingWordChanged();
         if (!m_processingSpelling) {
@@ -98,4 +97,3 @@ void PredictorModel::spellCheckFinishedProcessing(QString word, QStringList sugg
     reload(suggestions);
     m_processingSpelling = false;
 }
-

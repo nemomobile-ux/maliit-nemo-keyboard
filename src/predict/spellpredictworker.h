@@ -28,22 +28,21 @@
 #ifndef SPELLPREDICTWORKER_H
 #define SPELLPREDICTWORKER_H
 
-#include "spellchecker.h"
 #include "candidatescallback.h"
+#include "spellchecker.h"
 #include <presage.h>
 
+#include <QMap>
 #include <QObject>
 #include <QStringList>
-#include <QMap>
 
 class CandidatesCallback;
 
-class SpellPredictWorker : public QObject
-{
+class SpellPredictWorker : public QObject {
     Q_OBJECT
 
 public:
-    SpellPredictWorker(QObject *parent = 0);
+    SpellPredictWorker(QObject* parent = 0);
     void suggest(const QString& word, int limit);
 
 public slots:

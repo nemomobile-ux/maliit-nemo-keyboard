@@ -20,24 +20,23 @@
 #ifndef KEYBOARDSLAYOUTMODEL_H
 #define KEYBOARDSLAYOUTMODEL_H
 
-#include <QAbstractListModel>
-#include <QObject>
 #include <MGConfItem>
+#include <QAbstractListModel>
 #include <QJsonObject>
+#include <QObject>
 
-class KeyboardsLayoutModel : public QAbstractListModel
-{
+class KeyboardsLayoutModel : public QAbstractListModel {
     Q_OBJECT
     Q_PROPERTY(QStringList enabledKeyboards READ enabledKeyboards NOTIFY enabledKeyboardsChanged)
     Q_PROPERTY(QString lastKeyboardLayout READ lastKeyboardLayout WRITE setLastKeyboardLayout NOTIFY lastKeyboardLayoutChanged)
     Q_PROPERTY(int contentType READ contentType WRITE setContentType NOTIFY contentTypeChanged)
 
 public:
-    KeyboardsLayoutModel(QObject *parent = nullptr);
+    KeyboardsLayoutModel(QObject* parent = nullptr);
 
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
-    QVariant data(const QModelIndex &index, int role) const;
-    QHash<int, QByteArray> roleNames() const {return m_hash;}
+    int rowCount(const QModelIndex& parent = QModelIndex()) const;
+    QVariant data(const QModelIndex& index, int role) const;
+    QHash<int, QByteArray> roleNames() const { return m_hash; }
 
     Q_INVOKABLE bool isKeyboardLayoutEnabled(QString code) const;
     Q_INVOKABLE void setKeyboardLayoutEnabled(QString code, bool enabled);
@@ -48,7 +47,7 @@ public:
     QString lastKeyboardLayout();
     void setLastKeyboardLayout(QString code);
 
-    int contentType() {return m_contentType;}
+    int contentType() { return m_contentType; }
     void setContentType(int type);
     QJsonObject getContentTypeLayout(QString jsonString) const;
 
@@ -58,7 +57,7 @@ signals:
     void contentTypeChanged();
 
 private:
-    QHash<int,QByteArray> m_hash;
+    QHash<int, QByteArray> m_hash;
     QStringList m_layoutsFiles;
     QString m_configFilePath;
     int m_contentType;

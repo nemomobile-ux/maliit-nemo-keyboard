@@ -29,7 +29,7 @@
 
 #include <QDebug>
 
-SpellPredictWorker::SpellPredictWorker(QObject *parent)
+SpellPredictWorker::SpellPredictWorker(QObject* parent)
     : QObject(parent)
     , m_candidatesContext()
     , m_presageCandidates(CandidatesCallback(m_candidatesContext))
@@ -50,13 +50,13 @@ void SpellPredictWorker::parsePredictionText(const QString& surroundingLeft, con
     QString preedit = origPreedit;
 
     // Allow plugins to override certain words such as ('i' -> 'I')
-    if(m_overrides.contains(preedit.toLower())) {
+    if (m_overrides.contains(preedit.toLower())) {
         preedit = m_overrides[preedit.toLower()];
         list << preedit;
         // Emit the override corrections instantly so they're always up-to-date
         // as they're often used for short words like 'I'
         Q_EMIT newPredictionSuggestions(origPreedit, list);
-    } else if(m_spellChecker.spell(preedit)) {
+    } else if (m_spellChecker.spell(preedit)) {
         // If the user input is spelt correctly add it to the start of the predictions
         list << preedit;
     }
@@ -68,7 +68,7 @@ void SpellPredictWorker::parsePredictionText(const QString& surroundingLeft, con
         for (it = predictions.begin(); it != predictions.end(); ++it) {
             QString prediction = QString::fromStdString(*it);
             // Presage will implicitly learn any words the user types as part
-            // of its prediction model, so we only provide predictions for 
+            // of its prediction model, so we only provide predictions for
             // words that have been explicitly added to the spellcheck dictionary.
             QString predictionTitleCase = prediction;
             predictionTitleCase[0] = prediction.at(0).toUpper();
@@ -86,8 +86,8 @@ void SpellPredictWorker::parsePredictionText(const QString& surroundingLeft, con
 
 void SpellPredictWorker::setLanguage(QString locale)
 {
-    QString dbFileName = "database_"+locale+".db";
-    QString fullPath("/usr/share/presage/"+ dbFileName);
+    QString dbFileName = "database_" + locale + ".db";
+    QString fullPath("/usr/share/presage/" + dbFileName);
     m_spellChecker.setLanguage(locale);
     m_spellChecker.setEnabled(true);
 
@@ -101,7 +101,7 @@ void SpellPredictWorker::setLanguage(QString locale)
 void SpellPredictWorker::suggest(const QString& word, int limit)
 {
     QStringList suggestions;
-    if(!m_spellChecker.spell(word)) {
+    if (!m_spellChecker.spell(word)) {
         suggestions = m_spellChecker.suggest(word, limit);
     }
     // If spelt correctly still send empty suggestions so the plugin knows we

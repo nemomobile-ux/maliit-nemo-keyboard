@@ -36,26 +36,25 @@
 
 class SpellCheckerPrivate;
 
-class SpellChecker
-{
+class SpellChecker {
     Q_DISABLE_COPY(SpellChecker)
     Q_DECLARE_PRIVATE(SpellChecker)
 public:
     // FIXME: Find better way to discover default dictionaries.
     // FIXME: Allow changing languages in between.
-    explicit SpellChecker(const QString &user_dictionary = QStringLiteral("%1/.config/maliit/userwords.txt").arg(QDir::homePath()));
+    explicit SpellChecker(const QString& user_dictionary = QStringLiteral("%1/.config/maliit/userwords.txt").arg(QDir::homePath()));
 
     ~SpellChecker();
 
     bool enabled() const;
     bool setEnabled(bool on);
 
-    bool spell(const QString &word);
-    QStringList suggest(const QString &word,
-                        int limit = -1);
-    void ignoreWord(const QString &word);
-    void addToUserWordList(const QString &word);
-    void updateWord(const QString &word);
+    bool spell(const QString& word);
+    QStringList suggest(const QString& word,
+        int limit = -1);
+    void ignoreWord(const QString& word);
+    void addToUserWordList(const QString& word);
+    void updateWord(const QString& word);
 
     bool setLanguage(const QString& language);
 
