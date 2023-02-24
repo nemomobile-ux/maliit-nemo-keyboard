@@ -1,0 +1,4 @@
+[D-BUS Service]
+Name=org.maliit.server
+Exec=/usr/bin/false
+SystemdService=maliit-server.service

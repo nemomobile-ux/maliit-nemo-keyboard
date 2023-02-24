@@ -23,6 +23,15 @@ pkg_check_modules(HUNSPELL hunspell REQUIRED IMPORTED_TARGET)
 install(FILES qml/nemo-keyboard.qml
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/maliit/plugins/)
 
+install(FILES data/org.maliit.server.service
+    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/dbus-1/services/)
+
+install(FILES data/maliit-server.service
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/systemd/user/)
+
+install(FILES data/maliit-server.sh
+    DESTINATION ${CMAKE_INSTALL_DIR}/etc/profile.d/)
+
 install(DIRECTORY qml/org/nemomobile
     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/maliit/plugins/org)
 
