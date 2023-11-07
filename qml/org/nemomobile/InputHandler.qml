@@ -2,7 +2,7 @@
 **
 ** Copyright (C) 2013 Jolla Ltd.
 ** Contact: Pekka Vuorela <pekka.vuorela@jollamobile.com>
-** Copyright (C) 2022 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
+** Copyright (C) 2022-2023 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
 ** All rights reserved.
 **
 ** This file is part of Maliit plugins
@@ -33,7 +33,7 @@
 **
 ****************************************************************************************/
 
-import QtQuick 2.6
+import QtQuick
 import com.meego.maliitquick 1.0
 import org.glacier.keyboard 1.0
 

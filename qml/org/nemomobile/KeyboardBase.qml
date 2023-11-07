@@ -5,7 +5,7 @@
  * Copyright (C) 2012-2013 Jolla Ltd.
  * Copyright (C) 2012 John Brooks <john.brooks@dereferenced.net>
  * Copyright (C) Jakub Pavelek <jpavelek@live.com>
- * Copyright (C) 2021-2022 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2021-2023 Chupligin Sergey <neochapay@gmail.com>
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -31,8 +31,12 @@
  *
  */
 
-import QtQuick 2.6
-import QtQuick.Controls.Styles.Nemo 1.0
+import QtQuick
+import QtQuick.Controls
+
+import Nemo
+import Nemo.Controls
+
 import com.meego.maliitquick 1.0
 
 import org.glacier.keyboard 1.0

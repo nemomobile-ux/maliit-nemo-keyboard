@@ -8,7 +8,7 @@ PortraitCharacterKey 1.0 PortraitCharacterKey.qml
 LandscapeCharacterKey 1.0 LandscapeCharacterKey.qml
 FunctionKey 1.0 FunctionKey.qml
 BackspaceKey 1.0 BackspaceKey.qml
-EnterKey 1.0 EnterKey.qml
+EnterKeyItem 1.0 EnterKeyItem.qml
 ShiftKey 1.0 ShiftKey.qml
 SpellChecker 1.0 SpellChecker.qml
 SymbolKey 1.0 SymbolKey.qml

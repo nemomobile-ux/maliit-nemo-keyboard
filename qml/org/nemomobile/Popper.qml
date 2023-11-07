@@ -1,6 +1,6 @@
 /*
  * This file is part of Maliit plugins
- * Copyright (C) 2022 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
+ * Copyright (C) 2022-2023 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
  * Copyright (C) Jakub Pavelek <jpavelek@live.com>
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -26,10 +26,11 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+import QtQuick
+import QtQuick.Controls
 
-import QtQuick 2.6
-import QtQuick.Controls.Styles.Nemo 1.0
-
+import Nemo
+import Nemo.Controls
 
 Item {
     id: popper
@@ -52,7 +53,12 @@ Item {
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         font.pixelSize: popper.height*0.8
-        font.family: Theme.fontFamily
+        FontLoader {
+            id: localFont
+            source: Theme.fontPath
+        }
+        font.family: localFont.font.family
+        font.styleName: localFont.font.styleName
         font.bold: true
         color: Theme.textColor
     }

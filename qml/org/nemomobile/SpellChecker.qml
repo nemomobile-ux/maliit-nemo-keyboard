@@ -1,7 +1,7 @@
 /*
  * This file is part of Glacier keyboard
  *
- * Copyright (C) 2022 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2022-2023 Chupligin Sergey <neochapay@gmail.com>
  *
  * Contact: Mohammad Anwari <Mohammad.Anwari@nokia.com>
  *
@@ -29,8 +29,12 @@
  *
  */
 
-import QtQuick 2.6
-import QtQuick.Controls.Styles.Nemo 1.0
+import QtQuick
+import QtQuick.Controls
+
+import Nemo
+import Nemo.Controls
+
 import com.meego.maliitquick 1.0
 
 import org.glacier.keyboard 1.0

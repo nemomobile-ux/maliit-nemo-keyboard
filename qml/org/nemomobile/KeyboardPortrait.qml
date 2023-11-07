@@ -4,7 +4,7 @@
  * Copyright (C) Jakub Pavelek <jpavelek@live.com>
  * Copyright (C) 2012 John Brooks <john.brooks@dereferenced.net>
  * Copyright (C) 2013 Jolla Ltd.
- * Copyright (C) 2022 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
+ * Copyright (C) 2022-2023 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -30,7 +30,7 @@
  *
  */
 
-import QtQuick 2.0
+import QtQuick
 
 Column {
     id: keyArea
@@ -38,10 +38,10 @@ Column {
     width: parent.width
     height: parent.height
 
-    property int topPadding: Theme.itemSpacingExtraSmall
-    property int bottomPadding: topPadding
-    property int leftPadding: Theme.itemSpacingExtraSmall/2
-    property int rightPadding: leftPadding
+    topPadding: Theme.itemSpacingExtraSmall
+    bottomPadding: topPadding
+    leftPadding: Theme.itemSpacingExtraSmall/2
+    rightPadding: leftPadding
 
     property bool isShifted
     property bool isShiftLocked
@@ -167,7 +167,7 @@ Column {
             captionShifted: "."
         }
 
-        EnterKey {
+        EnterKeyItem {
             id: entKey
             width: keyArea.width / 10
             height: keyHeight

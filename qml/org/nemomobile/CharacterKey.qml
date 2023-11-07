@@ -1,6 +1,6 @@
 /*
  * This file is part of Maliit plugins
- * Copyright (C) 2022 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
+ * Copyright (C) 2022-2023 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
  * Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies). All rights reserved.
  *
  * Contact: Jakub Pavelek <jpavelek@live.com>
@@ -29,9 +29,11 @@
  *
  */
 
-import QtQuick 2.6
-import QtQuick.Controls.Nemo 1.0
-import QtQuick.Controls.Styles.Nemo 1.0
+import QtQuick
+import QtQuick.Controls
+
+import Nemo
+import Nemo.Controls
 
 KeyBase  {
     id: aCharKey
@@ -59,7 +61,12 @@ KeyBase  {
         anchors.centerIn: parent
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        font.family: Theme.fontFamily
+        FontLoader {
+            id: localFont
+            source: Theme.fontPath
+        }
+        font.family: localFont.font.family
+        font.styleName: localFont.font.styleName
         font.pixelSize: aCharKey.height*0.5
         font.bold: true
         color:Theme.textColor
@@ -123,7 +130,12 @@ KeyBase  {
                     text: keyData
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    font.family: Theme.fontFamily
+                    FontLoader {
+                        id: accentsListModelLocalFont
+                        source: Theme.fontPath
+                    }
+                    font.family: accentsListModelLocalFont.font.family
+                    font.styleName: accentsListModelLocalFont.font.styleName
                     font.pixelSize: aCharKey.height*0.5
                     font.bold: true
                     color:Theme.textColor

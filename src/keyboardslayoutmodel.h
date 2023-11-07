@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2022-2023 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -61,7 +61,7 @@ private:
     QStringList m_layoutsFiles;
     QString m_configFilePath;
     int m_contentType;
-    const QString m_layoutsDir = "/usr/share/glacier-keyboard/layouts";
+    const QString m_layoutsDir;
     MGConfItem m_enabledLayoutConfigItem;
     MGConfItem m_lastKeyboardLayout;
     QJsonObject m_keyboardlayout;

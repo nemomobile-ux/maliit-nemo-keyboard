@@ -1,6 +1,6 @@
 /*
  * This file is part of Maliit Plugins
- * Copyright (C) 2022 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
+ * Copyright (C) 2022-2023 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
  * Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies). All rights reserved.
  *
  * Contact: Mohammad Anwari <Mohammad.Anwari@nokia.com>
@@ -29,7 +29,7 @@
  *
  */
 
-import QtQuick 2.0
+import QtQuick
 
 Column {
     id: keyArea
@@ -45,10 +45,11 @@ Column {
     property variant keyboardLayout: keyboard.keyboardLayout
     property var enabledKeyboards: keyboard.enabledKeyboards
 
-    property int topPadding: Theme.itemSpacingExtraSmall
-    property int bottomPadding: topPadding
-    property int leftPadding: Theme.itemSpacingExtraSmall/2
-    property int rightPadding: leftPadding
+    topPadding: Theme.itemSpacingExtraSmall
+    bottomPadding: topPadding
+    leftPadding: Theme.itemSpacingExtraSmall/2
+    rightPadding: leftPadding
+
     property int keyHeight: keyArea.height / 4
 
     property int totalCharButtons: Math.max(keyboardLayout["row1"].length, keyboardLayout["row2"].length, keyboardLayout["row3"].length)
@@ -165,7 +166,7 @@ Column {
             captionShifted: "."
         }
 
-        EnterKey {
+        EnterKeyItem {
             id: entKey
             width: keyArea.width / 8
             height: keyHeight

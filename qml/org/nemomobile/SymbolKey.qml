@@ -2,6 +2,7 @@
  * This file is part of Maliit plugins
  *
  * Copyright (C) 2011 Jolla ltd. and/or its subsidiary(-ies). All rights reserved.
+ * Copyright (C) 2023 Chupligin Sergey <neochapay@gmail.com>
  *
  * Contact: Pekka Vuorela <pekka.vuorela@jollamobile.com>
  *
@@ -29,7 +30,7 @@
  *
  */
 
-import QtQuick 2.6
+import QtQuick
 
 FunctionKey {
     caption: inSymView ? "ABC" : "123"

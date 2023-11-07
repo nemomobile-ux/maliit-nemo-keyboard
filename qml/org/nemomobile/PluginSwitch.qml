@@ -5,6 +5,8 @@
  *
  * Contact: Mohammad Anwari <Mohammad.Anwari@nokia.com>
  *
+ * Copyright (C) 2023 Chupligin Sergey <neochapay@gmail.com>
+ *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
  *
@@ -29,7 +31,7 @@
  *
  */
 
-import QtQuick 2.6
+import QtQuick
 import com.meego.maliitquick 1.0
 
 //! This component is used to swith between plugins by horizontally flicking on QML keyboard

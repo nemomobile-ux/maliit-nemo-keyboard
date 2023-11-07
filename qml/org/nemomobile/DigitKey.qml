@@ -1,7 +1,7 @@
 /*
  * This file is part of Glacier Keyboards
  *
- * Copyright (C) 2022 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
+ * Copyright (C) 2022-2023 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -27,7 +27,7 @@
  *
  */
 
-import QtQuick 2.6
+import QtQuick
 
 CharacterKey {
     width: keyArea.width / 4

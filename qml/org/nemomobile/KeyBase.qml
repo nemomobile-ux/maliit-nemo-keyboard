@@ -1,6 +1,6 @@
 /*
  * This file is part of Maliit plugins
- * Copyright (C) 2022 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
+ * Copyright (C) 2022-2023 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
  * Copyright (C) 2013 Jolla ltd and/or its subsidiary(-ies). All rights reserved.
  *
  * Contact: Pekka Vuorela <pekka.vuorela@jollamobile.com>
@@ -29,7 +29,8 @@
  *
  */
 
-import QtQuick 2.6
+import QtQuick
+import QtQuick.Controls
 
 Item {
     property int leftPadding

@@ -2,7 +2,7 @@
  * This file is part of Maliit plugins
  *
  * Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies). All rights reserved.
- * Copyright (C) 2021-2022 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2021-2023 Chupligin Sergey <neochapay@gmail.com>
  *
  * Contact: Mohammad Anwari <Mohammad.Anwari@nokia.com>
  *
@@ -30,7 +30,7 @@
  *
  */
 
-import QtQuick 2.6
+import QtQuick
 import org.nemomobile 1.0
 
 Item {

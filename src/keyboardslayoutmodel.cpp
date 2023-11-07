@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2022-2023 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -29,6 +29,7 @@ KeyboardsLayoutModel::KeyboardsLayoutModel(QObject* parent)
     : m_enabledLayoutConfigItem("/home/glacier/keyboard/enabledLayouts")
     , m_lastKeyboardLayout("/home/glacier/keyboard/lastKeyboard")
     , m_contentType(0)
+    , m_layoutsDir("/usr/share/glacier-keyboard/layouts")
 {
     QDirIterator it(m_layoutsDir, QStringList() << "*.json", QDir::Files);
     while (it.hasNext()) {

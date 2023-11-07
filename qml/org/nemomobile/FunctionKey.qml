@@ -2,7 +2,7 @@
  * This file is part of Maliit plugins
  *
  * Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies). All rights reserved.
- * Copyright (C) 2022 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
+ * Copyright (C) 2022-2023 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
  *
  * Contact: Jakub Pavelek <jpavelek@live.com>
  *
@@ -30,8 +30,11 @@
  *
  */
 
-import QtQuick 2.6
-import QtQuick.Controls.Styles.Nemo 1.0
+import QtQuick
+import QtQuick.Controls
+
+import Nemo
+import Nemo.Controls
 
 KeyBase {
     id: aFunctKey
@@ -41,7 +44,6 @@ KeyBase {
     property int sourceWidth: -1
     property int sourceHeight: -1
     property string imagesrc: bgimg.source
-    //property alias text:text
 
     topPadding: Theme.itemSpacingExtraSmall
     bottomPadding: topPadding
@@ -93,7 +95,12 @@ KeyBase {
         width: parent.width - leftPadding - rightPadding - 4
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        font.family: Theme.fontFamily
+        FontLoader {
+            id: localFont
+            source: Theme.fontPath
+        }
+        font.family: localFont.font.family
+        font.styleName: localFont.font.styleName
         fontSizeMode: Text.HorizontalFit
         font.pixelSize: Theme.fontSizeSmall
         color: Theme.textColor
