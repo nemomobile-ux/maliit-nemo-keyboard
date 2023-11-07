@@ -1,6 +1,6 @@
 ### Sets QT_INSTALL_QML to the directory where QML Plugins should be installed
 function(FindQtInstallQml)
-    find_program(QMAKE NAMES qmake-qt6 qmake)
+    find_program(QMAKE NAMES qmake6 qmake)
     if(NOT QMAKE)
     message(FATAL_ERROR "qmake not found")
     endif()
@@ -36,6 +36,7 @@ target_link_libraries(glacierkeyboard
     Qt6::Quick
     PkgConfig::MLITE6
     -lpresage -lhunspell)
+
 target_compile_definitions(glacierkeyboard PRIVATE
         HUNSPELL_DICT_PATH="${HUNSPELL_DICT_PATH}")
 
