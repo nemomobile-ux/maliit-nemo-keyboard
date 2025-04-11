@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2023 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2022-2025 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -20,7 +20,7 @@
 #ifndef KEYBOARDSLAYOUTMODEL_H
 #define KEYBOARDSLAYOUTMODEL_H
 
-#include <MGConfItem>
+#include <MDConfItem>
 #include <QAbstractListModel>
 #include <QJsonObject>
 #include <QObject>
@@ -62,8 +62,8 @@ private:
     QString m_configFilePath;
     int m_contentType;
     const QString m_layoutsDir;
-    MGConfItem m_enabledLayoutConfigItem;
-    MGConfItem m_lastKeyboardLayout;
+    MDConfItem m_enabledLayoutConfigItem;
+    MDConfItem m_lastKeyboardLayout;
     QJsonObject m_keyboardlayout;
 };
 
