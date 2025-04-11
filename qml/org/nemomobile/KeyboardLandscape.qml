@@ -1,6 +1,6 @@
 /*
  * This file is part of Maliit Plugins
- * Copyright (C) 2022-2023 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
+ * Copyright (C) 2022-2025 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
  * Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies). All rights reserved.
  *
  * Contact: Mohammad Anwari <Mohammad.Anwari@nokia.com>
@@ -30,6 +30,7 @@
  */
 
 import QtQuick
+import Nemo
 
 Column {
     id: keyArea

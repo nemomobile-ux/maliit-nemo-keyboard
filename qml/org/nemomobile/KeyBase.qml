@@ -1,6 +1,6 @@
 /*
  * This file is part of Maliit plugins
- * Copyright (C) 2022-2023 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
+ * Copyright (C) 2022-2025 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
  * Copyright (C) 2013 Jolla ltd and/or its subsidiary(-ies). All rights reserved.
  *
  * Contact: Pekka Vuorela <pekka.vuorela@jollamobile.com>
@@ -31,6 +31,8 @@
 
 import QtQuick
 import QtQuick.Controls
+
+import Nemo
 
 Item {
     property int leftPadding

@@ -1,7 +1,7 @@
 /*
  * This file is part of Maliit plugins
  *
- * Copyright (C) 2023 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2023-2025 Chupligin Sergey <neochapay@gmail.com>
  *
  * Contact: Pekka Vuorela <pekka.vuorela@jollamobile.com>
  *
@@ -30,6 +30,7 @@
  */
 
 import QtQuick
+import Nemo
 
 CharacterKey {
     width: keyArea.width / 10
