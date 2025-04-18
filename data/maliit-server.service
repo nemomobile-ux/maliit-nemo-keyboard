@@ -4,7 +4,7 @@ After=dbus.socket pre-user-session.target lipstick.service
 Requires=dbus.socket pre-user-session.target lipstick.service
 
 [Service]
-ExecStart=/usr/bin/maliit-server
+ExecStart=/usr/bin/maliit6-server
 Type=dbus
 BusName=org.maliit.server
 
