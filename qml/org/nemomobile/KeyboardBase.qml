@@ -1,11 +1,11 @@
 /*
- * This file is part of Maliit plugins
+ * This file is part of Maliit nemo keyboard
  *
  * Copyright (C) 2017 Eetu Kahelin
  * Copyright (C) 2012-2013 Jolla Ltd.
  * Copyright (C) 2012 John Brooks <john.brooks@dereferenced.net>
  * Copyright (C) Jakub Pavelek <jpavelek@live.com>
- * Copyright (C) 2021-2023 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2021-2025 Chupligin Sergey <neochapay@gmail.com>
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -478,17 +478,15 @@ Item {
     }
 
     function changeCurrentKeyboard() {
-        inputHandler.hideMore()
-        if(availableKeyboards.length == 1) {
-            lastKeyboardLayout = availableKeyboards[0]
+        if(keyboardModel.enabledKeyboards.length == 1) {
+            keyboardModel.lastKeyboardLayout = keyboardModel.enabledKeyboards[0]
         }
 
-        var currentLayoutID = availableKeyboards.indexOf(lastKeyboardLayout.value);
-
-        if(currentLayoutID === availableKeyboards.length-1) {
-            lastKeyboardLayout = availableKeyboards[0];
+        var currentLayoutID = keyboardModel.enabledKeyboards.indexOf(keyboardModel.lastKeyboardLayout);
+        if(currentLayoutID === keyboardModel.enabledKeyboards.length-1) {
+            keyboardModel.lastKeyboardLayout = keyboardModel.enabledKeyboards[0];
         } else {
-            lastKeyboardLayout = availableKeyboards[currentLayoutID+1];
+            keyboardModel.lastKeyboardLayout = keyboardModel.enabledKeyboards[currentLayoutID+1];
         }
     }
 }

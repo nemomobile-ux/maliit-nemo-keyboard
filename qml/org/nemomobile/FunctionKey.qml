@@ -1,8 +1,8 @@
 /*
- * This file is part of Maliit plugins
+ * This file is part of Maliit nemo keyboard
  *
  * Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies). All rights reserved.
- * Copyright (C) 2022-2023 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
+ * Copyright (C) 2022-2025 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
  *
  * Contact: Jakub Pavelek <jpavelek@live.com>
  *
@@ -39,7 +39,7 @@ import Nemo.Controls
 KeyBase {
     id: aFunctKey
 
-    property string icon
+    property alias icon: functionImage.source
     property string caption
     property int sourceWidth: -1
     property int sourceHeight: -1
@@ -73,10 +73,10 @@ KeyBase {
         }
 
         Image {
+            id: functionImage
             anchors.centerIn: parent
-            source: icon
-            width: parent.width
-            height: parent.height
+            width: parent.width > parent.height ? parent.height*0.8 : parent.width*0.8
+            height: width
 
             fillMode: Image.PreserveAspectFit
 
