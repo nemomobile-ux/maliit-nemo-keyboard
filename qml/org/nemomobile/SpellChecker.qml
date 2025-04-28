@@ -78,7 +78,6 @@ Item{
 
                 anchors.centerIn: parent
 
-                font.family: Theme.fontFamily
                 font.pixelSize: spellChecker.height*0.5
                 font.bold: true
                 color:Theme.textColor
