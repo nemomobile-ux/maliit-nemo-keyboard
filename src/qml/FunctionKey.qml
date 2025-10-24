@@ -43,7 +43,6 @@ KeyBase {
     property string caption
     property int sourceWidth: -1
     property int sourceHeight: -1
-    property string imagesrc: bgimg.source
 
     topPadding: Theme.itemSpacingExtraSmall
     bottomPadding: topPadding
@@ -52,18 +51,10 @@ KeyBase {
 
     showPopper: false
 
-    BorderImage {
+    Rectangle {
         id: bgimg
-        border {
-            left: 1;
-            top: 4;
-            right: 1;
-            bottom:0
-        }
+        color: Theme.accentColor
 
-        horizontalTileMode: BorderImage.Repeat
-        verticalTileMode: BorderImage.Repeat
-        source: parent.pressed ? "keyboard-key-portrait-function-pressed.png" : "keyboard-key-portrait-function.png"
         anchors {
             fill:parent
             topMargin: topPadding
@@ -91,8 +82,7 @@ KeyBase {
     Text {
         id: text
         anchors.centerIn: parent
-        anchors.horizontalCenterOffset: Math.round((leftPadding - rightPadding) / 2)
-        width: parent.width - leftPadding - rightPadding - 4
+        width: parent.width
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         FontLoader {
@@ -102,7 +92,7 @@ KeyBase {
         font.family: localFont.font.family
         font.styleName: localFont.font.styleName
         fontSizeMode: Text.HorizontalFit
-        font.pixelSize: Theme.fontSizeSmall
+        font.pixelSize: Theme.fontSizeExtraLarge
         color: Theme.textColor
         text: caption
     }

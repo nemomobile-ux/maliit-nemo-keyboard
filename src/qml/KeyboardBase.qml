@@ -39,7 +39,7 @@ import Nemo.Controls
 
 import com.meego.maliitquick 1.0
 
-import org.glacier.keyboard 1.0
+import Glacier.Keyboard
 
 import "touchpointarray.js" as ActivePoints
 
@@ -85,7 +85,7 @@ Item {
 
     InputHandler {
         id: inputHandler
-        onPreeditChanged: spellchecker.check(preedit)
+        //onPreeditChanged: spellchecker.check(preedit)
     }
 
     Popper {

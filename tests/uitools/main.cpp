@@ -20,15 +20,28 @@
 #include <QDebug>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
+#include <QQuickView>
 #include <QQuickWindow>
 
 #include <glacierapp.h>
+#include "maliitquick.h"
+#include "fakeinputmethod.h"
 
 int main(int argc, char* argv[])
 {
     QGuiApplication* app = GlacierApp::app(argc, argv);
-    QQuickWindow* window = GlacierApp::showWindow();
+    QQmlEngine *engine = GlacierApp::engine();
 
-    window->setTitle(QObject::tr("Keyboard test"));
+    qmlRegisterUncreatableType<MaliitQuick>("com.meego.maliitquick", 1, 0, "Maliit", "This is the class used to export Maliit Enums");
+
+    QQuickView view;
+    view.engine()->rootContext()->setContextProperty("MInputMethodQuick", new FakeInputMethod());
+    view.setSource(QString(SOURCE_DIR) + "qml/nemo-keyboard.qml");
+
+
+    view.setResizeMode(QQuickView::SizeRootObjectToView);
+    view.show();
+
     app->exec();
 }

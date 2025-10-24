@@ -35,7 +35,7 @@ import QtQuick.Controls
 
 FunctionKey {
     caption: MInputMethodQuick.actionKeyOverride.label
-    icon: "icon-enter.svg"
+    icon: "icons/icon-enter.svg"
     repeat: true
     key: Qt.Key_Return
 }

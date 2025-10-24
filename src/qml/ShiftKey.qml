@@ -34,9 +34,9 @@ import QtQuick
 
 FunctionKey {
     icon: inSymView ? ""
-                    : (isShiftLocked) ? "icon-shift-locked.svg"
-                                      : (isShifted) ? "icon-shift-pressed.svg"
-                                                    : "icon-shift.svg"
+                    : (isShiftLocked) ? "icons/icon-shift-locked.svg"
+                                      : (isShifted) ? "icons/icon-shift-pressed.svg"
+                                                    : "icons/icon-shift.svg"
 
     caption: inSymView ? (inSymView2 ? "2/2" : "1/2") : ""
     key: Qt.Key_Shift

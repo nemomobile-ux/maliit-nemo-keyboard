@@ -35,7 +35,7 @@
 
 import QtQuick
 import com.meego.maliitquick 1.0
-import org.glacier.keyboard 1.0
+import Glacier.Keyboard
 
 Item {
     property Item pressedKey

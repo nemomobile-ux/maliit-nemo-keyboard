@@ -20,6 +20,7 @@ find_package(PkgConfig)
 pkg_check_modules(MLITE6 mlite6 REQUIRED IMPORTED_TARGET)
 pkg_check_modules(HUNSPELL hunspell REQUIRED IMPORTED_TARGET)
 pkg_check_modules(GLACIER glacierapp6 IMPORTED_TARGET)
+pkg_check_modules(MALLIT-FRAMEWORK maliit-framework IMPORTED_TARGET)
 
 install(FILES qml/nemo-keyboard.qml
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/maliit/plugins/)

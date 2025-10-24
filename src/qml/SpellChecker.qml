@@ -35,9 +35,9 @@ import QtQuick.Controls
 import Nemo
 import Nemo.Controls
 
-import com.meego.maliitquick 1.0
+//import com.meego.maliitquick 1.0
 
-import org.glacier.keyboard 1.0
+import Glacier.Keyboard
 
 Item{
     id: spellChecker

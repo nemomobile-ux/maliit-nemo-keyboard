@@ -68,7 +68,6 @@ KeyBase  {
         font.family: localFont.font.family
         font.styleName: localFont.font.styleName
         font.pixelSize: aCharKey.height*0.5
-        font.bold: true
         color:Theme.textColor
         text: (inSymView && symView.length) > 0 ? (inSymView2 ? symView2 : symView)
                                                 : (isShifted ? captionShifted : caption)
@@ -137,7 +136,6 @@ KeyBase  {
                     font.family: accentsListModelLocalFont.font.family
                     font.styleName: accentsListModelLocalFont.font.styleName
                     font.pixelSize: aCharKey.height*0.5
-                    font.bold: true
                     color:Theme.textColor
                     MouseArea{
                         anchors.fill: parent

@@ -31,7 +31,7 @@
  */
 
 import QtQuick
-import org.nemomobile 1.0
+import Glacier.Keyboard
 
 Item {
     id: canvas

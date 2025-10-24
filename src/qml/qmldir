@@ -1,2 +1,21 @@
-module org.glacier.keyboard
+module Glacier.Keyboard
 plugin glacierkeyboardplugin
+
+BackspaceKey 2.0 BackspaceKey.qml
+CharacterKey 2.0 CharacterKey.qml
+DigitKey 2.0 DigitKey.qml
+EnterKeyItem 2.0 EnterKeyItem.qml
+FunctionKey 2.0 FunctionKey.qml
+InputHandler 2.0 InputHandler.qml
+InputHandler 2.0 KeyBase.qml
+KeyboardBase 2.0 KeyboardBase.qml
+KeyboardDigits 2.0 KeyboardDigits.qml
+KeyboardLandscape 2.0 KeyboardLandscape.qml
+KeyboardPortrait 2.0 KeyboardPortrait.qml
+LandscapeCharacterKey 2.0 LandscapeCharacterKey.qml
+PluginSwitch 2.0 PluginSwitch.qml
+Popper 2.0 Popper.qml
+PortraitCharacterKey 2.0 PortraitCharacterKey.qml
+ShiftKey 2.0 ShiftKey.qml
+SpellChecker 2.0 SpellChecker.qml
+SymbolKey 2.0 SymbolKey.qml
