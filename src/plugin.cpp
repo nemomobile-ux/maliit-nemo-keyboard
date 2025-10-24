@@ -18,31 +18,16 @@
  */
 
 #include <QQmlEngine>
-#include <QQmlExtensionPlugin>
-#include <QtGlobal>
 #include <QtQml>
 
+#include "plugin.h"
 #include "keyboardslayoutmodel.h"
 #include "predictormodel.h"
 
-class Q_DECL_EXPORT GlacierPackageManagerPlugin : public QQmlExtensionPlugin {
-    Q_OBJECT
-    Q_PLUGIN_METADATA(IID "org.glacier.keyboard")
-public:
-    virtual ~GlacierPackageManagerPlugin() { }
 
-    void initializeEngine(QQmlEngine*, const char* uri)
-    {
-        Q_ASSERT(uri == QLatin1String("org.glacier.keyboard"));
-        qmlRegisterModule(uri, 1, 0);
-    }
-
-    void registerTypes(const char* uri)
-    {
-        Q_ASSERT(uri == QLatin1String("org.glacier.keyboard"));
-        qmlRegisterType<KeyboardsLayoutModel>(uri, 1, 0, "KeyboardsLayoutModel");
-        qmlRegisterType<PredictorModel>(uri, 1, 0, "PredictorModel");
-    }
-};
-
-#include "plugin.moc"
+void GlacierPackageManagerPlugin::registerTypes(const char* uri)
+{
+    Q_ASSERT(uri == QLatin1String("Glacier.Keyboard"));
+    qmlRegisterType<KeyboardsLayoutModel>(uri, 1, 0, "KeyboardsLayoutModel");
+    qmlRegisterType<PredictorModel>(uri, 1, 0, "PredictorModel");
+}
