@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.6.0)
+cmake_minimum_required(VERSION 3.10.0)
 
 project(maliit-nemo-keyboard
         VERSION 0.102
@@ -19,6 +19,7 @@ find_package(Qt6 ${QT_MIN_VERSION} COMPONENTS Gui Qml Quick LinguistTools REQUIR
 find_package(PkgConfig)
 pkg_check_modules(MLITE6 mlite6 REQUIRED IMPORTED_TARGET)
 pkg_check_modules(HUNSPELL hunspell REQUIRED IMPORTED_TARGET)
+pkg_check_modules(GLACIER glacierapp6 IMPORTED_TARGET)
 
 install(FILES qml/nemo-keyboard.qml
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/maliit/plugins/)
@@ -39,4 +40,5 @@ install(DIRECTORY layouts/
     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/glacier-keyboard/layouts)
 
 add_subdirectory("src")
+add_subdirectory("tests")
 add_subdirectory("settings-plugin")
