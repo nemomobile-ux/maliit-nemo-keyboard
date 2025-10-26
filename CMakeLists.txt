@@ -15,12 +15,19 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_INSTALL_PREFIX "/usr" CACHE PATH "..." FORCE)
 
 set(QT_MIN_VERSION "6.0.0")
-find_package(Qt6 ${QT_MIN_VERSION} COMPONENTS Gui Qml Quick LinguistTools REQUIRED)
+find_package(Qt6 ${QT_MIN_VERSION} COMPONENTS Gui Qml Quick LinguistTools Test REQUIRED)
 find_package(PkgConfig)
 pkg_check_modules(MLITE6 mlite6 REQUIRED IMPORTED_TARGET)
 pkg_check_modules(HUNSPELL hunspell REQUIRED IMPORTED_TARGET)
 pkg_check_modules(GLACIER glacierapp6 IMPORTED_TARGET)
 pkg_check_modules(MALLIT-FRAMEWORK maliit-framework IMPORTED_TARGET)
+
+enable_testing()
+
+add_subdirectory("src")
+add_subdirectory("tests")
+add_subdirectory("settings-plugin")
+
 
 install(FILES qml/nemo-keyboard.qml
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/maliit/plugins/)
@@ -39,7 +46,3 @@ install(DIRECTORY qml/org/nemomobile
 
 install(DIRECTORY layouts/
     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/glacier-keyboard/layouts)
-
-add_subdirectory("src")
-add_subdirectory("tests")
-add_subdirectory("settings-plugin")

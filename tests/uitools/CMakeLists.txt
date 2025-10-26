@@ -4,8 +4,6 @@ set(SRC main.cpp
     maliitquick.h
     fakeinputmethod.cpp
     fakeinputmethod.h)
-add_definitions(-DSOURCE_DIR="${CMAKE_SOURCE_DIR}/")
-add_definitions(-DBUILD_DIR="${CMAKE_BINARY_DIR}/")
 
 add_executable(glacier-keyboardtest ${SRC} ${RESOURCES}
     fakekeyoverridequick.h fakekeyoverridequick.cpp)

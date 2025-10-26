@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2023 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2022-2025 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -26,10 +26,17 @@
 #include <QJsonObject>
 
 KeyboardsLayoutModel::KeyboardsLayoutModel(QObject* parent)
+#ifdef UNIT_TEST
+    : m_enabledLayoutConfigItem("/tests/glacier/keyboard/enabledLayouts")
+    , m_lastKeyboardLayout("/tests/glacier/keyboard/lastKeyboard")
+    , m_contentType(0)
+    , m_layoutsDir("/usr/share/glacier-keyboard/layouts")
+#else
     : m_enabledLayoutConfigItem("/home/glacier/keyboard/enabledLayouts")
     , m_lastKeyboardLayout("/home/glacier/keyboard/lastKeyboard")
     , m_contentType(0)
     , m_layoutsDir("/usr/share/glacier-keyboard/layouts")
+#endif
 {
     QDirIterator it(m_layoutsDir, QStringList() << "*.json", QDir::Files);
     while (it.hasNext()) {
@@ -123,6 +130,9 @@ void KeyboardsLayoutModel::setKeyboardLayoutEnabled(QString code, bool enabled)
             enabledLayouts.removeAt(enabledLayouts.lastIndexOf(code));
         }
         m_enabledLayoutConfigItem.set(enabledLayouts.join(";"));
+        if(lastKeyboardLayout() == code) {
+            setLastKeyboardLayout(enabledLayouts.last());
+        }
         endResetModel();
         emit enabledKeyboardsChanged();
     }
