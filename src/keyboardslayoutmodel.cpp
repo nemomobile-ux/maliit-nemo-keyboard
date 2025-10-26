@@ -130,7 +130,7 @@ void KeyboardsLayoutModel::setKeyboardLayoutEnabled(QString code, bool enabled)
             enabledLayouts.removeAt(enabledLayouts.lastIndexOf(code));
         }
         m_enabledLayoutConfigItem.set(enabledLayouts.join(";"));
-        if(lastKeyboardLayout() == code) {
+        if (lastKeyboardLayout() == code) {
             setLastKeyboardLayout(enabledLayouts.last());
         }
         endResetModel();

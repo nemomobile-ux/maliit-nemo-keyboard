@@ -18,8 +18,7 @@
 #include <maliit/namespace.h>
 
 //! \brief MaliitQuick exposes Maliit enums to QML-based input methods
-class MaliitQuick: public QObject
-{
+class MaliitQuick : public QObject {
     Q_OBJECT
     Q_ENUMS(SwitchDirection)
     Q_ENUMS(ContentType)

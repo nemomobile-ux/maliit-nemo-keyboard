@@ -11,7 +11,7 @@ class FakeInputMethod : public QObject {
     Q_PROPERTY(int screenWidth READ screenWidth NOTIFY screenWidthChanged)
     Q_PROPERTY(int screenHeight READ screenHeight NOTIFY screenHeightChanged)
     Q_PROPERTY(int appOrientation READ appOrientation NOTIFY appOrientationChanged)
-    Q_PROPERTY(FakeKeyOverrideQuick *actionKeyOverride READ actionKeyOverride NOTIFY actionKeyOverrideChanged)
+    Q_PROPERTY(FakeKeyOverrideQuick* actionKeyOverride READ actionKeyOverride NOTIFY actionKeyOverrideChanged)
     Q_PROPERTY(bool active READ isActive NOTIFY activeChanged)
     Q_PROPERTY(bool surroundingTextValid READ surroundingTextValid NOTIFY surroundingTextValidChanged)
     Q_PROPERTY(QString surroundingText READ surroundingText NOTIFY surroundingTextChanged)
@@ -38,7 +38,7 @@ public:
     bool predictionEnabled() const;
     bool autoCapitalizationEnabled() const;
     bool hiddenText() const;
-    FakeKeyOverrideQuick *actionKeyOverride() const;
+    FakeKeyOverrideQuick* actionKeyOverride() const;
 
 signals:
     void screenWidthChanged();
@@ -74,7 +74,7 @@ private:
     bool m_autoCapitalizationEnabled;
     bool m_hiddenText;
     QSharedPointer<FakeKeyOverrideQuick> m_actionKeyOverride;
-//    KeyOverrideQuick *m_actionKeyOverride = nullptr;
+    //    KeyOverrideQuick *m_actionKeyOverride = nullptr;
 };
 
 #endif // FAKEINPUTMETHOD_H

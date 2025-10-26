@@ -71,12 +71,11 @@ bool FakeInputMethod::hiddenText() const
     return m_hiddenText;
 }
 
-FakeKeyOverrideQuick *FakeInputMethod::actionKeyOverride() const
+FakeKeyOverrideQuick* FakeInputMethod::actionKeyOverride() const
 {
     return m_actionKeyOverride.data();
 }
 
 void FakeInputMethod::inputMethodReset()
 {
-
 }

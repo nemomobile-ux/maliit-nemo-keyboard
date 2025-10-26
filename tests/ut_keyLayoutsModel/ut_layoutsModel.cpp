@@ -18,9 +18,9 @@
  */
 
 #include "ut_layoutsModel.h"
-#include <src/keyboardslayoutmodel.h>
-#include <QtTest/QtTest>
 #include <MDConfItem>
+#include <QtTest/QtTest>
+#include <src/keyboardslayoutmodel.h>
 
 void ut_layoutsModel::init()
 {

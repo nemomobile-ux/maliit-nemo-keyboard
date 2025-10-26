@@ -20,10 +20,9 @@
 #include <QQmlEngine>
 #include <QtQml>
 
-#include "plugin.h"
 #include "keyboardslayoutmodel.h"
+#include "plugin.h"
 #include "predictormodel.h"
-
 
 void GlacierPackageManagerPlugin::registerTypes(const char* uri)
 {
