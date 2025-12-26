@@ -20,7 +20,7 @@ find_package(PkgConfig)
 pkg_check_modules(MLITE6 mlite6 REQUIRED IMPORTED_TARGET)
 pkg_check_modules(HUNSPELL hunspell REQUIRED IMPORTED_TARGET)
 pkg_check_modules(GLACIER glacierapp IMPORTED_TARGET)
-pkg_check_modules(MALLIT-FRAMEWORK maliit-framework IMPORTED_TARGET)
+pkg_check_modules(MALLIT-FRAMEWORK maliit6-framework IMPORTED_TARGET)
 
 enable_testing()
 
@@ -30,7 +30,7 @@ add_subdirectory("settings-plugin")
 
 
 install(FILES qml/nemo-keyboard.qml
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/maliit/plugins/)
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/maliit6/plugins/)
 
 install(FILES data/org.maliit.server.service
     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/dbus-1/services/)
@@ -42,7 +42,7 @@ install(FILES data/maliit-server.sh
     DESTINATION ${CMAKE_INSTALL_DIR}/etc/profile.d/)
 
 install(DIRECTORY qml/org/nemomobile
-    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/maliit/plugins/org)
+    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/maliit6/plugins/org)
 
 install(DIRECTORY layouts/
     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/glacier-keyboard/layouts)
