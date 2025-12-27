@@ -1,6 +1,6 @@
 /*
  * This file is part of Maliit plugins
- * Copyright (C) 2022-2023 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
+ * Copyright (C) 2022-2025 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
  * Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies). All rights reserved.
  *
  * Contact: Jakub Pavelek <jpavelek@live.com>
@@ -61,12 +61,8 @@ KeyBase  {
         anchors.centerIn: parent
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        FontLoader {
-            id: localFont
-            source: Theme.fontPath
-        }
-        font.family: localFont.font.family
-        font.styleName: localFont.font.styleName
+        font.family: Theme.fontFamily
+        font.styleName: Theme.fontStyleName
         font.pixelSize: aCharKey.height*0.5
         color:Theme.textColor
         text: (inSymView && symView.length) > 0 ? (inSymView2 ? symView2 : symView)
@@ -129,12 +125,8 @@ KeyBase  {
                     text: keyData
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    FontLoader {
-                        id: accentsListModelLocalFont
-                        source: Theme.fontPath
-                    }
-                    font.family: accentsListModelLocalFont.font.family
-                    font.styleName: accentsListModelLocalFont.font.styleName
+                    font.family: Theme.fontFamily
+                    font.styleName: Theme.fontStyleName
                     font.pixelSize: aCharKey.height*0.5
                     color:Theme.textColor
                     MouseArea{

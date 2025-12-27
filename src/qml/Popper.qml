@@ -1,6 +1,6 @@
 /*
  * This file is part of Maliit plugins
- * Copyright (C) 2022-2023 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
+ * Copyright (C) 2022-2025 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
  * Copyright (C) Jakub Pavelek <jpavelek@live.com>
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -53,12 +53,8 @@ Item {
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         font.pixelSize: popper.height*0.8
-        FontLoader {
-            id: localFont
-            source: Theme.fontPath
-        }
-        font.family: localFont.font.family
-        font.styleName: localFont.font.styleName
+        font.family: Theme.fontFamily
+        font.styleName: Theme.fontStyleName
         font.bold: true
         color: Theme.textColor
     }

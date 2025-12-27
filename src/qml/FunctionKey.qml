@@ -85,12 +85,8 @@ KeyBase {
         width: parent.width
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        FontLoader {
-            id: localFont
-            source: Theme.fontPath
-        }
-        font.family: localFont.font.family
-        font.styleName: localFont.font.styleName
+        font.family: Theme.fontFamily
+        font.styleName: Theme.fontStyleName
         fontSizeMode: Text.HorizontalFit
         font.pixelSize: Theme.fontSizeExtraLarge
         color: Theme.textColor
