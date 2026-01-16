@@ -28,12 +28,12 @@ class KeyboardSettingsPlugin : public GlacierSettingsPlugin {
     Q_PLUGIN_METADATA(IID "Glacier.SettingsPlugin")
 public:
     KeyboardSettingsPlugin(QObject* parent = nullptr);
-    PluginCategory category() { return PluginCategory::Personalization; }
-    QString id() { return "keyboard"; }
-    QString title() { return tr("Keyboard"); }
-    QString description() { return tr("Keyboard layout"); }
-    QString qmlPath() { return "/usr/share/glacier-settings/plugins/keyboard/keyboard.qml"; }
-    QString icon() { return "/usr/share/glacier-settings/plugins/keyboard/keyboard.svg"; }
+    PluginCategory category() const { return PluginCategory::Personalization; }
+    QString id() const { return "keyboard"; }
+    QString title() const { return tr("Keyboard"); }
+    QString description() const { return tr("Keyboard layout"); }
+    QString qmlPath() const { return "/usr/share/glacier-settings/plugins/keyboard/keyboard.qml"; }
+    QString icon() const { return "/usr/share/glacier-settings/plugins/keyboard/keyboard.svg"; }
     bool enabled() { return true; };
 };
 
