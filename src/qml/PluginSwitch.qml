@@ -32,7 +32,6 @@
  */
 
 import QtQuick
-import com.meego.maliitquick 1.0
 
 //! This component is used to swith between plugins by horizontally flicking on QML keyboard
 Flickable {

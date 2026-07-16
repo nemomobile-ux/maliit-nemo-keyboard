@@ -33,11 +33,11 @@ int main(int argc, char* argv[])
     QGuiApplication* app = GlacierApp::app(argc, argv);
     QQmlEngine* engine = GlacierApp::engine();
 
-    qmlRegisterUncreatableType<MaliitQuick>("com.meego.maliitquick", 1, 0, "Maliit", "This is the class used to export Maliit Enums");
+//    qmlRegisterUncreatableType<MaliitQuick>("com.meego.maliitquick", 1, 0, "Maliit", "This is the class used to export Maliit Enums");
 
     QQuickView view;
     view.engine()->rootContext()->setContextProperty("MInputMethodQuick", new FakeInputMethod());
-    view.setSource(QString(SOURCE_DIR) + "qml/nemo-keyboard.qml");
+    view.setSource(QString(SOURCE_DIR) + "/qml/nemo-keyboard.qml");
 
     view.setResizeMode(QQuickView::SizeRootObjectToView);
     view.show();

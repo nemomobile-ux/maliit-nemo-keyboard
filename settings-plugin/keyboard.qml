@@ -21,7 +21,7 @@ import QtQuick
 import Nemo
 import Nemo.Controls
 
-import org.glacier.keyboard 1.0
+import Glacier.Keyboard
 
 Page {
     id: keyboardSettingsPlugin
