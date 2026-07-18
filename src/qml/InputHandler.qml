@@ -34,6 +34,7 @@
 ****************************************************************************************/
 
 import QtQuick
+import com.meego.maliitquick 1.0
 import Glacier.Keyboard
 
 Item {

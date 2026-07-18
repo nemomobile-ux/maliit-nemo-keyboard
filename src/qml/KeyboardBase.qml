@@ -37,6 +37,8 @@ import QtQuick.Controls
 import Nemo
 import Nemo.Controls
 
+import com.meego.maliitquick 1.0
+
 import Glacier.Keyboard
 
 import "touchpointarray.js" as ActivePoints
